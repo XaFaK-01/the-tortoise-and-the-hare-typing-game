@@ -9,7 +9,21 @@
   },
   "dependencies": {
     "next": "10.0.7",
+    "random-words": "^1.1.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^4.15.2",
+    "autoprefixer": "^10.2.4",
+    "eslint": "^7.20.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.22.0",
+    "postcss": "^8.2.6",
+    "tailwindcss": "^2.0.3"
   }
 }
