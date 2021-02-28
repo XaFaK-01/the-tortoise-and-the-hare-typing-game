@@ -38,9 +38,9 @@ const GameOver = ({ race_end_point }) => {
             : "text-pink-700"
         }`}
       >
-        {opponentPlayerPosition <= race_end_point
-          ? "You won...!"
-          : "You lost...!"}
+        {opponentPlayerPosition >= race_end_point
+          ? "You lost...!"
+          : "You won...!"}
       </p>
 
       <p className="text-4xl text-yellow-500 capitalize text-center mt-5">

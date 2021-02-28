@@ -29,7 +29,7 @@ const ChooseGameType = () => {
         <Button
           mainColor="bg-yellow-500"
           hoverColor="bg-yellow-700"
-          text="Multiplier"
+          text="Multiplayer"
         />
       </div>
     </>
