@@ -9,6 +9,7 @@ import {
   ADD_WEAK_KEY_STROKE,
   START_TYPING_COUNTDOWN,
   INCREMENT_CHARACTER_TYPED,
+  SET_ROOM_NAME,
 } from "../constants/constants.js"
 
 export const gameStateReducers = (state = {}, action) => {
@@ -64,6 +65,12 @@ export const gameStateReducers = (state = {}, action) => {
       return {
         ...state,
         charactersTyped: state.charactersTyped + 1,
+      }
+
+    case SET_ROOM_NAME:
+      return {
+        ...state,
+        roomName: action.payload,
       }
 
     case RESET_GAME_STATE:

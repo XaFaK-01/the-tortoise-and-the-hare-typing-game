@@ -30,6 +30,7 @@ const ChooseGameType = () => {
           mainColor="bg-yellow-500"
           hoverColor="bg-yellow-700"
           text="Multiplier"
+          function_callback={() => dispatch(setGameType("multiplayer"))}
         />
       </div>
     </>

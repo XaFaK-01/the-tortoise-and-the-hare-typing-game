@@ -17,28 +17,13 @@ app.prepare().then(async () => {
 
   // here we're listening on the connection event for incoming sockets and then
   // logging into the console
-  var allClients = []
-  var allClientsUserName = []
-  var rooms = []
-
   io.on("connection", (socket) => {
-    socket.on("userConnected", (userName) => {
-      allClients.push(socket)
-      allClientsUserName.push(userName)
-      io.emit("userConnectedSuccessful", userName)
-    })
-
-    socket.on("disconnect", () => {
-      var i = allClients.indexOf(socket)
-      io.emit("userDisconnected", allClientsUserName[i])
-
-      allClients.splice(i, 1)
-      allClientsUserName.splice(i, 1)
-    })
-
     socket.on("join", (room) => {
       console.log(`Socket ${socket.id} joining ${room}`)
       socket.join(room)
+
+      // / sending to all clients in 'game' room except sender
+      socket.to(room).emit("user joined", "A player has joined the game!")
     })
 
     socket.on("chat", (data) => {

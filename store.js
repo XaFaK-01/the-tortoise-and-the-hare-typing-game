@@ -45,6 +45,7 @@ const initialState = {
     weakKeyStrokes: [],
     typingCountdown: 0,
     charactersTyped: 0,
+    roomName: null,
   },
 }
 

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import CharacterChosen from "../components/characterChosen"
 import ChooseCharacter from "../components/chooseCharacter"
 import ChooseGameType from "../components/chooseGameType"
-const Welcome = () => {
+const Home = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo
 
@@ -50,4 +50,4 @@ const Welcome = () => {
   )
 }
 
-export default Welcome
+export default Home

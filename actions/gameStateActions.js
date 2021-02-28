@@ -11,6 +11,7 @@ import {
   ADD_WEAK_KEY_STROKE,
   START_TYPING_COUNTDOWN,
   INCREMENT_CHARACTER_TYPED,
+  SET_ROOM_NAME,
 } from "../constants/constants.js"
 
 var opponentPointIncrease
@@ -28,34 +29,31 @@ export const startOpponentRun = () => (dispatch, getState) => {
   }, 1000)
 }
 
-export const endOpponentRun = () => (dispatch, getState) => {
+export const endOpponentRun = () => () => {
   clearInterval(opponentPointIncrease)
 }
 
-export const startGame = () => (dispatch, getState) => {
+export const startGame = () => (dispatch) => {
   dispatch({
     type: GAME_START,
   })
 }
 
-export const setOpponentDifficultyLevel = (difficultyValue) => (
-  dispatch,
-  getState
-) => {
+export const setOpponentDifficultyLevel = (difficultyValue) => (dispatch) => {
   dispatch({
     type: SET_OPPONENT_DIFFICULTY_LEVEL,
     payload: difficultyValue,
   })
 }
 
-export const setGameType = (gameType) => (dispatch, getState) => {
+export const setGameType = (gameType) => (dispatch) => {
   dispatch({
     type: SET_GAME_TYPE,
     payload: gameType,
   })
 }
 
-export const resetFullGame = () => (dispatch, getState) => {
+export const resetFullGame = () => (dispatch) => {
   dispatch({
     type: RESET_CURRENT_PLAYER_INFO,
   })
@@ -116,5 +114,12 @@ export const endTypingCountdown = () => () => {
 export const incrementCharactersTyped = () => (dispatch) => {
   dispatch({
     type: INCREMENT_CHARACTER_TYPED,
+  })
+}
+
+export const setRoomName = (nameOfRoom) => (dispatch) => {
+  dispatch({
+    type: SET_ROOM_NAME,
+    payload: nameOfRoom,
   })
 }
