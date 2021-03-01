@@ -22,12 +22,27 @@ export const charactersChosen = (
 ) => {
   socket = io()
 
-  if (socket && currentPlayerCharacter && opponentPlayerCharacter)
-    console.log(`characters chosen called!`)
-  socket.emit("characters chosen", {
-    room,
-    currentPlayerCharacter,
-    opponentPlayerCharacter,
+  if (socket && currentPlayerCharacter && opponentPlayerCharacter) {
+    socket.emit("characters chosen", {
+      room,
+      currentPlayerCharacter,
+      opponentPlayerCharacter,
+    })
+  }
+}
+
+export const startTheGameForBothPlayers = (room) => {
+  socket = io()
+  if (socket && room) {
+    console.log(`start the game for both players called!`)
+    socket.emit("start the game for both players", room)
+  }
+}
+
+export const gameStartSuccessful = (cb) => {
+  if (!socket) return true
+  socket.on("game start successful", () => {
+    return cb(null, "start the game")
   })
 }
 

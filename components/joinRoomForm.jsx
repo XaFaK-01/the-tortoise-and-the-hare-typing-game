@@ -3,12 +3,14 @@ import Button from "./button"
 import {
   initiateSocket,
   subscribeToRoomCharacters,
+  gameStartSuccessful,
 } from "../functions/socketio"
 import { useDispatch, useSelector } from "react-redux"
 import { setRoomName } from "../actions/gameStateActions"
 
 import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
 import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
+import Router from "next/router"
 
 const JoinRoomForm = () => {
   const dispatch = useDispatch()
@@ -33,6 +35,14 @@ const JoinRoomForm = () => {
       if (err) return
       dispatch(selectCurrentPlayerCharacter(data.opponentPlayerCharacter))
       dispatch(selectOpponentPlayerCharacter())
+    })
+
+    gameStartSuccessful((err, data) => {
+      console.log("data is: ", data)
+      if (err) return
+      if (data === "start the game") {
+        Router.push("/game")
+      }
     })
   })
   return (

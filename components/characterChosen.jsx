@@ -3,16 +3,19 @@ import { useSelector } from "react-redux"
 import Link from "next/link"
 import Button from "./button"
 
+import { startTheGameForBothPlayers } from "../functions/socketio"
+
 const CharacterChosen = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo
 
   const gameState = useSelector((state) => state.gameState)
-  const { gameType } = gameState
+  const { gameType, roomName } = gameState
 
   const gameStartHandler = () => {
     if (gameType === "multiplayer") {
-      // socketio function for starting game for both players
+      console.log("gameStartHandler called")
+      startTheGameForBothPlayers(roomName)
     }
   }
 

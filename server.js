@@ -37,6 +37,11 @@ app.prepare().then(async () => {
       )
     })
 
+    socket.on("start the game for both players", (room) => {
+      console.log(`starting game for room: ${room}`)
+      socket.to(room).emit("game start successful")
+    })
+
     socket.on("chat", (data) => {
       const { message, room } = data
       console.log(`msg: ${message}, room: ${room}`)
