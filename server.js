@@ -26,6 +26,17 @@ app.prepare().then(async () => {
       socket.to(room).emit("user joined", "A player has joined the game!")
     })
 
+    socket.on("characters chosen", (data) => {
+      const { room, currentPlayerCharacter, opponentPlayerCharacter } = data
+      console.log(`characters chosen for room: ${room}`)
+      io.to(room).emit(
+        "characters chosen successful",
+        room,
+        currentPlayerCharacter,
+        opponentPlayerCharacter
+      )
+    })
+
     socket.on("chat", (data) => {
       const { message, room } = data
       console.log(`msg: ${message}, room: ${room}`)

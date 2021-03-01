@@ -10,9 +10,40 @@ export const initiateSocket = (room) => {
 export const userJoinedRoom = (cb) => {
   if (!socket) return true
   socket.on("user joined", (msg) => {
-    console.log("Websocket event received!")
+    console.log("Websocket event received for user joining!")
     return cb(null, msg)
   })
+}
+
+export const charactersChosen = (
+  room,
+  currentPlayerCharacter,
+  opponentPlayerCharacter
+) => {
+  socket = io()
+
+  if (socket && currentPlayerCharacter && opponentPlayerCharacter)
+    console.log(`characters chosen called!`)
+  socket.emit("characters chosen", {
+    room,
+    currentPlayerCharacter,
+    opponentPlayerCharacter,
+  })
+}
+
+export const subscribeToRoomCharacters = (cb) => {
+  if (!socket) return true
+  socket.on(
+    "characters chosen successful",
+    (roomName, currentPlayerCharacter, opponentPlayerCharacter) => {
+      console.log("Websocket event received!")
+      return cb(null, {
+        roomName,
+        currentPlayerCharacter,
+        opponentPlayerCharacter,
+      })
+    }
+  )
 }
 
 export const disconnectSocket = () => {

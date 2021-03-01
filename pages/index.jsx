@@ -4,6 +4,8 @@ import { useSelector } from "react-redux"
 import CharacterChosen from "../components/characterChosen"
 import ChooseCharacter from "../components/chooseCharacter"
 import ChooseGameType from "../components/chooseGameType"
+import Link from "next/link"
+import Button from "../components/button"
 const Home = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo
@@ -36,11 +38,8 @@ const Home = () => {
         </p>
         <div className="mt-10 p-8 bg-gray-700 bg-opacity-50 rounded-xl">
           {gameType ? (
-            currentPlayerCharacter ? (
-              <CharacterChosen />
-            ) : (
-              <ChooseCharacter />
-            )
+            gameType !== "multiplayer" &&
+            (currentPlayerCharacter ? <CharacterChosen /> : <ChooseCharacter />)
           ) : (
             <ChooseGameType />
           )}

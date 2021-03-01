@@ -10,6 +10,12 @@ const CharacterChosen = () => {
   const gameState = useSelector((state) => state.gameState)
   const { gameType } = gameState
 
+  const gameStartHandler = () => {
+    if (gameType === "multiplayer") {
+      // socketio function for starting game for both players
+    }
+  }
+
   return (
     <div className="cursor-pointer">
       <img
@@ -20,7 +26,7 @@ const CharacterChosen = () => {
       <p className="text-lg text-center capitalize text-white">
         {currentPlayerCharacter} <strong> Selected!</strong>
       </p>
-      {gameType === "singlePlayer" ? (
+      {gameType && (
         <div className="w-56 mx-auto my-4">
           <Link className="outline-none" href="/game">
             <a>
@@ -28,18 +34,7 @@ const CharacterChosen = () => {
                 mainColor="bg-blue-600"
                 hoverColor="bg-blue-400"
                 text="Start Playing!"
-              />
-            </a>
-          </Link>
-        </div>
-      ) : (
-        <div className="w-56 mx-auto my-4">
-          <Link className="outline-none" href="/configureMultiplayer">
-            <a>
-              <Button
-                mainColor="bg-blue-600"
-                hoverColor="bg-blue-400"
-                text="Configure Multiplayer"
+                function_callback={gameStartHandler}
               />
             </a>
           </Link>

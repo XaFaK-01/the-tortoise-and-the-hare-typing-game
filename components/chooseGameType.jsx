@@ -2,6 +2,7 @@ import React from "react"
 
 import { useDispatch } from "react-redux"
 import { setGameType } from "../actions/gameStateActions"
+import Link from "next/link"
 import Button from "./button"
 const ChooseGameType = () => {
   const dispatch = useDispatch()
@@ -26,12 +27,16 @@ const ChooseGameType = () => {
           function_callback={() => dispatch(setGameType("singlePlayer"))}
         />
 
-        <Button
-          mainColor="bg-yellow-500"
-          hoverColor="bg-yellow-700"
-          text="Multiplayer"
-          function_callback={() => dispatch(setGameType("multiplayer"))}
-        />
+        <Link className="outline-none" href="/configureMultiplayer">
+          <a>
+            <Button
+              mainColor="bg-yellow-500"
+              hoverColor="bg-yellow-700"
+              text="Multiplayer"
+              function_callback={() => dispatch(setGameType("multiplayer"))}
+            />
+          </a>
+        </Link>
       </div>
     </>
   )

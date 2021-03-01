@@ -1,23 +1,54 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Button from "./button"
-import { initiateSocket } from "../functions/socketio"
-import { useDispatch } from "react-redux"
+import {
+  initiateSocket,
+  subscribeToRoomCharacters,
+} from "../functions/socketio"
+import { useDispatch, useSelector } from "react-redux"
 import { setRoomName } from "../actions/gameStateActions"
+
+import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
+import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
+
 const JoinRoomForm = () => {
   const dispatch = useDispatch()
   const [nameOfRoom, setNameOfRoom] = useState("")
   const [joinRoomRequest, setJoinRoomRequest] = useState(false)
 
+  const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
+  const { currentPlayerCharacter } = currentPlayerInfo
+
+  const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
+  const { opponentPlayerCharacter } = opponentPlayerInfo
+
   const joinARoomHandler = () => {
-    // dispatch(setRoomName(nameOfRoom))
+    dispatch(setRoomName(nameOfRoom))
     // setRoomCreateSuccess(true)
     initiateSocket(nameOfRoom)
     setJoinRoomRequest(true)
   }
+
+  useEffect(() => {
+    subscribeToRoomCharacters((err, data) => {
+      if (err) return
+      dispatch(selectCurrentPlayerCharacter(data.opponentPlayerCharacter))
+      dispatch(selectOpponentPlayerCharacter())
+    })
+  })
   return (
     <div>
       {joinRoomRequest ? (
-        <p>Joining room, please wait...</p>
+        <div>
+          <p>Joining room, please wait...</p>
+          {currentPlayerCharacter && (
+            <div>
+              <p>Characters chosen!</p>
+              <p>Your player character: {currentPlayerCharacter}</p>
+              <p>Opponent player character: {opponentPlayerCharacter}</p>
+              <p>Game will start any minute now...!</p>
+            </div>
+          )}
+        </div>
       ) : (
         <form>
           <input

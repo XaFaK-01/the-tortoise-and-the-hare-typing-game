@@ -5,6 +5,10 @@ import Button from "../components/button"
 import RoomNameForm from "../components/roomNameForm"
 import JoinRoomForm from "../components/joinRoomForm"
 
+import CharacterChosen from "../components/characterChosen"
+import ChooseCharacter from "../components/chooseCharacter"
+import Router from "next/router"
+
 import { userJoinedRoom, disconnectSocket } from "../functions/socketio"
 
 import io from "socket.io-client"
@@ -26,6 +30,20 @@ const Home = () => {
       if (err) return
       setUserJoinedRoomSuccess(data)
     })
+  })
+
+  useEffect(() => {
+    if (!gameType) {
+      Router.push("/")
+    }
+
+    // if (
+    //   opponentPlayerPosition >= race_end_point ||
+    //   currentPlayerPosition >= race_end_point
+    // ) {
+    //   dispatch(endOpponentRun())
+    //   dispatch(endTypingCountdown())
+    // }
   })
 
   return (
@@ -52,17 +70,14 @@ const Home = () => {
           Typing Edition
         </p>
         <div className="mt-10 p-8 bg-gray-700 bg-opacity-50 rounded-xl">
+          <p>{userJoinedRoomSuccess}</p>
           {userJoinedRoomSuccess !== "" ? (
             <>
-              <p>{userJoinedRoomSuccess}</p>
-              <div className="w-64 mx-auto">
-                <Button
-                  mainColor="bg-green-600"
-                  hoverColor="bg-green-400"
-                  text="Start game!"
-                  // function_callback={() => setCreateRoom(true)}
-                />
-              </div>
+              {currentPlayerCharacter ? (
+                <CharacterChosen />
+              ) : (
+                <ChooseCharacter />
+              )}
             </>
           ) : joinRoom ? (
             <JoinRoomForm />

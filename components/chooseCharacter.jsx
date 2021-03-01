@@ -3,14 +3,31 @@ import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
 import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
 import { setOpponentDifficultyLevel } from "../actions/gameStateActions"
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+
+import { charactersChosen } from "../functions/socketio"
 
 const ChooseCharacter = () => {
+  const gameState = useSelector((state) => state.gameState)
+  const { roomName } = gameState
+
+  const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
+  const { currentPlayerCharacter } = currentPlayerInfo
+
+  const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
+  const { opponentPlayerCharacter } = opponentPlayerInfo
+
   const dispatch = useDispatch()
 
   const characterSelectHandler = (character) => {
     dispatch(selectCurrentPlayerCharacter(character))
     dispatch(selectOpponentPlayerCharacter())
+
+    let opponentCharacter
+    if (character === "hare") opponentCharacter = "tortoise"
+    if (character === "tortoise") opponentCharacter = "hare"
+
+    charactersChosen(roomName, character, opponentCharacter)
   }
 
   const levelDifficultyHandler = (value) => {
