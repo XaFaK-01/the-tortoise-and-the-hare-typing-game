@@ -9,6 +9,13 @@ import { startGame, endTypingCountdown } from "../actions/gameStateActions"
 import GameOver from "../components/gameOver"
 import MainGame from "../components/mainGame"
 
+import {
+  incrementOpponentPlayerPoints,
+  incrementOpponentPlayerPointsSuccessful,
+} from "../functions/socketio"
+
+import { addAPointToOpponentPlayerMultiplayer } from "../actions/opponentPlayerActions"
+
 export default function Home() {
   const [showRules, setShowRules] = useState(true)
   const dispatch = useDispatch()
@@ -19,9 +26,17 @@ export default function Home() {
 
   const { currentPlayerPosition, currentPlayerCharacter } = currentPlayerInfo
   const { opponentPlayerPosition } = opponentPlayerInfo
-  const { gameStart } = gameState
+  const { gameStart, gameType } = gameState
 
   const race_end_point = 87
+
+  // useEffect(() => {
+  //   incrementOpponentPlayerPointsSuccessful((err, data) => {
+  //     console.log("incrementOpponentPlayerPointsSuccessful called")
+  //     if (err) return
+  //     dispatch(addAPointToOpponentPlayerMultiplayer(data))
+  //   })
+  // }, [])
 
   useEffect(() => {
     if (!currentPlayerCharacter) {
@@ -38,8 +53,8 @@ export default function Home() {
   })
 
   useEffect(() => {
-    if (gameStart) dispatch(startOpponentRun())
-  }, [dispatch, gameStart])
+    if (gameStart && gameType === "singlePlayer") dispatch(startOpponentRun())
+  }, [dispatch, gameStart, gameType])
 
   const setShowRulesHandler = (value) => {
     setShowRules(value)

@@ -7,13 +7,17 @@ import JoinRoomForm from "../components/joinRoomForm"
 
 import CharacterChosen from "../components/characterChosen"
 import ChooseCharacter from "../components/chooseCharacter"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 
 import { userJoinedRoom, disconnectSocket } from "../functions/socketio"
+
+import { useDispatch } from "react-redux"
+import { setMySocketId, setOpponentSocketId } from "../actions/gameStateActions"
 
 import io from "socket.io-client"
 let socket = io()
 const Home = () => {
+  const dispatch = useDispatch()
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo
 
@@ -26,9 +30,11 @@ const Home = () => {
   const [userJoinedRoomSuccess, setUserJoinedRoomSuccess] = useState("")
 
   useEffect(() => {
-    userJoinedRoom((err, data) => {
+    userJoinedRoom((err, socketids) => {
       if (err) return
-      setUserJoinedRoomSuccess(data)
+      setUserJoinedRoomSuccess("A user have joined the room")
+      dispatch(setMySocketId(socketids[0]))
+      dispatch(setOpponentSocketId(socketids[1]))
     })
   })
 

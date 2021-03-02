@@ -5,11 +5,14 @@ import { setOpponentDifficultyLevel } from "../actions/gameStateActions"
 
 import { useDispatch, useSelector } from "react-redux"
 
-import { charactersChosen } from "../functions/socketio"
+import {
+  charactersChosen,
+  sendSocketIdsToOpponent,
+} from "../functions/socketio"
 
 const ChooseCharacter = () => {
   const gameState = useSelector((state) => state.gameState)
-  const { roomName } = gameState
+  const { roomName, mySocketId, opponentSocketId } = gameState
 
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo
@@ -28,6 +31,8 @@ const ChooseCharacter = () => {
     if (character === "tortoise") opponentCharacter = "hare"
 
     charactersChosen(roomName, character, opponentCharacter)
+    // code for sending socketids
+    sendSocketIdsToOpponent(roomName, mySocketId, opponentSocketId)
   }
 
   const levelDifficultyHandler = (value) => {

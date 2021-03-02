@@ -46,6 +46,8 @@ const initialState = {
     typingCountdown: 0,
     charactersTyped: 0,
     roomName: null,
+    mySocketId: "",
+    opponentSocketId: "",
   },
 }
 

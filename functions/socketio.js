@@ -9,9 +9,9 @@ export const initiateSocket = (room) => {
 
 export const userJoinedRoom = (cb) => {
   if (!socket) return true
-  socket.on("user joined", (msg) => {
+  socket.on("user joined", (socketid) => {
     console.log("Websocket event received for user joining!")
-    return cb(null, msg)
+    return cb(null, socketid)
   })
 }
 
@@ -31,10 +31,32 @@ export const charactersChosen = (
   }
 }
 
+export const sendSocketIdsToOpponent = (
+  room,
+  currentUserSocketId,
+  opponentSocketId
+) => {
+  socket = io()
+
+  if (socket && room && currentUserSocketId && opponentSocketId) {
+    socket.emit("set socketids", {
+      room,
+      currentUserSocketId,
+      opponentSocketId,
+    })
+  }
+}
+
+export const socketIdsSuccessful = (cb) => {
+  if (!socket) return true
+  socket.on("set socketids successful", (data) => {
+    return cb(null, data)
+  })
+}
+
 export const startTheGameForBothPlayers = (room) => {
   socket = io()
   if (socket && room) {
-    console.log(`start the game for both players called!`)
     socket.emit("start the game for both players", room)
   }
 }
@@ -51,7 +73,6 @@ export const subscribeToRoomCharacters = (cb) => {
   socket.on(
     "characters chosen successful",
     (roomName, currentPlayerCharacter, opponentPlayerCharacter) => {
-      console.log("Websocket event received!")
       return cb(null, {
         roomName,
         currentPlayerCharacter,
@@ -59,6 +80,21 @@ export const subscribeToRoomCharacters = (cb) => {
       })
     }
   )
+}
+
+export const incrementOpponentPlayerPoints = (socketId) => {
+  socket = io()
+  if (socket && socketId) {
+    console.log(`increment opponent player points called!`)
+    socket.emit("increment opponent player points", socketId)
+  }
+}
+
+export const incrementOpponentPlayerPointsSuccessful = (cb) => {
+  if (!socket) return true
+  socket.on("increment opponent player points successful", (points) => {
+    return cb(null, points)
+  })
 }
 
 export const disconnectSocket = () => {

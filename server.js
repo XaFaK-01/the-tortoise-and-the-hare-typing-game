@@ -17,13 +17,18 @@ app.prepare().then(async () => {
 
   // here we're listening on the connection event for incoming sockets and then
   // logging into the console
+
+  var socketids = []
   io.on("connection", (socket) => {
     socket.on("join", (room) => {
       console.log(`Socket ${socket.id} joining ${room}`)
       socket.join(room)
 
+      socketids.push(socket.id)
+
       // / sending to all clients in 'game' room except sender
-      socket.to(room).emit("user joined", "A player has joined the game!")
+      // socket.to(room).emit("user joined", "A player has joined the game!")
+      socket.broadcast.to(room).emit("user joined", socketids)
     })
 
     socket.on("characters chosen", (data) => {
@@ -37,9 +42,31 @@ app.prepare().then(async () => {
       )
     })
 
+    socket.on("set socketids", (data) => {
+      const { room, currentUserSocketId, opponentSocketId } = data
+      console.log("room: ", room)
+      console.log("currentUserSocketId: ", currentUserSocketId)
+      console.log("opponentSocketId: ", opponentSocketId)
+
+      console.log(`characters chosen for room: ${room}`)
+      io.to(room).emit("set socketids successful", {
+        room,
+        currentUserSocketId,
+        opponentSocketId,
+      })
+    })
+
     socket.on("start the game for both players", (room) => {
       console.log(`starting game for room: ${room}`)
       socket.to(room).emit("game start successful")
+    })
+
+    socket.on("increment opponent player points", (socketId) => {
+      console.log(`increment opponent player points for socketid: ${socketId}`)
+
+      socket
+        .to(socketId)
+        .emit("increment opponent player points successful", 10)
     })
 
     socket.on("chat", (data) => {

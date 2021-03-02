@@ -4,12 +4,19 @@ import {
   initiateSocket,
   subscribeToRoomCharacters,
   gameStartSuccessful,
+  socketIdsSuccessful,
 } from "../functions/socketio"
 import { useDispatch, useSelector } from "react-redux"
-import { setRoomName } from "../actions/gameStateActions"
+import {
+  setRoomName,
+  setMySocketId,
+  setOpponentSocketId,
+} from "../actions/gameStateActions"
 
 import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
 import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
+import { userJoinedRoom, disconnectSocket } from "../functions/socketio"
+
 import Router from "next/router"
 
 const JoinRoomForm = () => {
@@ -31,6 +38,22 @@ const JoinRoomForm = () => {
   }
 
   useEffect(() => {
+    userJoinedRoom((err, socketid) => {
+      if (err) return
+      dispatch(setMySocketId(socketid))
+    })
+
+    socketIdsSuccessful((err, data) => {
+      if (err) return
+
+      console.log("socketIdsSuccessful called")
+      console.log("data: ", data)
+      dispatch(setMySocketId(data.opponentSocketId))
+      dispatch(setOpponentSocketId(data.currentUserSocketId))
+    })
+  })
+
+  useEffect(() => {
     subscribeToRoomCharacters((err, data) => {
       if (err) return
       dispatch(selectCurrentPlayerCharacter(data.opponentPlayerCharacter))
@@ -38,7 +61,6 @@ const JoinRoomForm = () => {
     })
 
     gameStartSuccessful((err, data) => {
-      console.log("data is: ", data)
       if (err) return
       if (data === "start the game") {
         Router.push("/game")

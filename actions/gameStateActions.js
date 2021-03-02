@@ -12,6 +12,8 @@ import {
   START_TYPING_COUNTDOWN,
   INCREMENT_CHARACTER_TYPED,
   SET_ROOM_NAME,
+  SET_MY_SOCKET_ID,
+  SET_OPPONENT_SOCKET_ID,
 } from "../constants/constants.js"
 
 var opponentPointIncrease
@@ -121,5 +123,19 @@ export const setRoomName = (nameOfRoom) => (dispatch) => {
   dispatch({
     type: SET_ROOM_NAME,
     payload: nameOfRoom,
+  })
+}
+
+export const setMySocketId = (socketId) => (dispatch) => {
+  dispatch({
+    type: SET_MY_SOCKET_ID,
+    payload: socketId,
+  })
+}
+
+export const setOpponentSocketId = (socketId) => (dispatch) => {
+  dispatch({
+    type: SET_OPPONENT_SOCKET_ID,
+    payload: socketId,
   })
 }

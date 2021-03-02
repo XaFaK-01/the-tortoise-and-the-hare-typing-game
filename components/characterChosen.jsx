@@ -14,7 +14,6 @@ const CharacterChosen = () => {
 
   const gameStartHandler = () => {
     if (gameType === "multiplayer") {
-      console.log("gameStartHandler called")
       startTheGameForBothPlayers(roomName)
     }
   }
