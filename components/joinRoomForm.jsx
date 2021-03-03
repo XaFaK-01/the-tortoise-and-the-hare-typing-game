@@ -15,7 +15,7 @@ import {
 
 import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
 import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
-import { userJoinedRoom, disconnectSocket } from "../functions/socketio"
+import { userJoinedRoom } from "../functions/socketio"
 
 import Router from "next/router"
 
@@ -40,6 +40,7 @@ const JoinRoomForm = () => {
   useEffect(() => {
     userJoinedRoom((err, socketid) => {
       if (err) return
+
       dispatch(setMySocketId(socketid))
     })
 
@@ -51,9 +52,7 @@ const JoinRoomForm = () => {
       dispatch(setMySocketId(data.opponentSocketId))
       dispatch(setOpponentSocketId(data.currentUserSocketId))
     })
-  })
 
-  useEffect(() => {
     subscribeToRoomCharacters((err, data) => {
       if (err) return
       dispatch(selectCurrentPlayerCharacter(data.opponentPlayerCharacter))
@@ -67,6 +66,7 @@ const JoinRoomForm = () => {
       }
     })
   })
+
   return (
     <div>
       {joinRoomRequest ? (

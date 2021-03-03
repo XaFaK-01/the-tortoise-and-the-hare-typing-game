@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Button from "../components/button"
-import { initiateSocket, roomJoinedSuccessful } from "../functions/socketio"
+import { initiateSocket } from "../functions/socketio"
 import { useDispatch } from "react-redux"
-import { setRoomName, setMySocketId } from "../actions/gameStateActions"
+import { setRoomName } from "../actions/gameStateActions"
 const RoomNameForm = () => {
   const dispatch = useDispatch()
   const [nameOfRoom, setNameOfRoom] = useState("")

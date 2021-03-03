@@ -1,11 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import RandomWord from "../components/randomWord"
 import Player from "../components/player"
 
 const MainGame = () => {
-  const dispatch = useDispatch()
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
 

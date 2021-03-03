@@ -1,5 +1,4 @@
-import React from "react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import useKeypress from "../hooks/useKeypress"
 import { useDispatch, useSelector } from "react-redux"
 import {
@@ -29,11 +28,8 @@ const RandomWord = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { randomlyGeneratedWord: theRandomWord } = currentPlayerInfo
 
-  const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
-  const { opponentPlayerPosition } = opponentPlayerInfo
-
   const gameState = useSelector((state) => state.gameState)
-  const { roomName, mySocketId, opponentSocketId } = gameState
+  const { mySocketId, opponentSocketId } = gameState
 
   const [randomlyGeneratedWord, setRandomlyGeneratedWord] = useState(
     () => theRandomWord,
@@ -67,7 +63,7 @@ const RandomWord = () => {
       dispatch(incrementTotalWordsTyped())
 
       //increase a point on socketio
-      incrementOpponentPlayerPoints(mySocketId)
+      incrementOpponentPlayerPoints(opponentSocketId)
 
       if (fluentWord) {
         dispatch(incrementFluentWordsTyped())

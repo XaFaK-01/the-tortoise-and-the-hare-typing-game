@@ -14,12 +14,6 @@ const ChooseCharacter = () => {
   const gameState = useSelector((state) => state.gameState)
   const { roomName, mySocketId, opponentSocketId } = gameState
 
-  const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
-  const { currentPlayerCharacter } = currentPlayerInfo
-
-  const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
-  const { opponentPlayerCharacter } = opponentPlayerInfo
-
   const dispatch = useDispatch()
 
   const characterSelectHandler = (character) => {

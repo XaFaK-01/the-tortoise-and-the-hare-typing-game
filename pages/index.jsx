@@ -4,8 +4,6 @@ import { useSelector } from "react-redux"
 import CharacterChosen from "../components/characterChosen"
 import ChooseCharacter from "../components/chooseCharacter"
 import ChooseGameType from "../components/chooseGameType"
-import Link from "next/link"
-import Button from "../components/button"
 const Home = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter } = currentPlayerInfo

@@ -30,11 +30,6 @@ export const opponentPlayerInfoReducer = (state = {}, action) => {
     case RESET_OPPONENT_PLAYER_INFO:
       return { opponentPlayerCharacter: "", opponentPlayerPosition: 0 }
 
-    // case OPPONENT_PLAYER_POINT_INCREASE:
-    // return {
-    //   ...state,
-    //   opponentPlayerPosition: action.payload.opponentPlayerPosition,
-    // }
     default:
       return state
   }
