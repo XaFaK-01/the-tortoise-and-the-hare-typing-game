@@ -26,9 +26,22 @@ app.prepare().then(async () => {
 
       socketids.push(socket.id)
 
+      // getting the last two
+      let requiredSocketIds = [
+        socketids[socketids.length - 2],
+        socketids[socketids.length - 1],
+      ]
+
       // / sending to all clients in 'game' room except sender
       // socket.to(room).emit("user joined", "A player has joined the game!")
-      socket.broadcast.to(room).emit("user joined", socketids)
+      socket.broadcast.to(room).emit("user joined", requiredSocketIds)
+    })
+
+    socket.on("disconnect", () => {
+      console.log(`socket: ${socket.id} disconnected!`)
+
+      var i = socketids.indexOf(socket)
+      socketids.splice(i, 1)
     })
 
     socket.on("characters chosen", (data) => {
@@ -59,14 +72,33 @@ app.prepare().then(async () => {
     socket.on("start the game for both players", (room) => {
       console.log(`starting game for room: ${room}`)
       socket.to(room).emit("game start successful")
+
+      console.log(io.of("/").in(room).clients)
     })
 
-    socket.on("increment opponent player points", (socketId) => {
-      console.log(`increment opponent player points for socketid: ${socketId}`)
+    socket.on("increment opponent player points", (data) => {
+      const { roomId, socketId } = data
+      // console.log(`increment opponent player points for socketid: ${socketId}`)
+      // console.log(`increment opponent player points for roomId: ${roomId}`)
 
-      socket
-        .to(socketId)
-        .emit("increment opponent player points successful", 10)
+      console.log(
+        `socket ${socket.id} wants to increment points for ${socketId}`
+      )
+      console.log(`socketids: `, socketids)
+      // socket
+      //   .to(socketId)
+      //   .emit("increment opponent player points successful", 10)
+
+      // socket.broadcast
+      // .to(roomId)
+      // .emit("increment opponent player points successful", 10)
+
+      socket.broadcast.emit("increment opponent player points successful", {
+        points: 10,
+        socketId,
+      })
+
+      // socket.to(roomId).emit("increment opponent player points successful", 10)
     })
 
     socket.on("chat", (data) => {

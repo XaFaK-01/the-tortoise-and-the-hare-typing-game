@@ -82,18 +82,18 @@ export const subscribeToRoomCharacters = (cb) => {
   )
 }
 
-export const incrementOpponentPlayerPoints = (socketId) => {
+export const incrementOpponentPlayerPoints = (roomId, socketId) => {
   socket = io()
   if (socket && socketId) {
     console.log(`increment opponent player points called!`)
-    socket.emit("increment opponent player points", socketId)
+    socket.emit("increment opponent player points", { roomId, socketId })
   }
 }
 
 export const incrementOpponentPlayerPointsSuccessful = (cb) => {
   if (!socket) return true
-  socket.on("increment opponent player points successful", (points) => {
-    return cb(null, points)
+  socket.on("increment opponent player points successful", (data) => {
+    return cb(null, data)
   })
 }
 

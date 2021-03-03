@@ -29,7 +29,7 @@ const RandomWord = () => {
   const { randomlyGeneratedWord: theRandomWord } = currentPlayerInfo
 
   const gameState = useSelector((state) => state.gameState)
-  const { mySocketId, opponentSocketId } = gameState
+  const { mySocketId, opponentSocketId, roomName } = gameState
 
   const [randomlyGeneratedWord, setRandomlyGeneratedWord] = useState(
     () => theRandomWord,
@@ -42,7 +42,8 @@ const RandomWord = () => {
     incrementOpponentPlayerPointsSuccessful((err, data) => {
       console.log("incrementOpponentPlayerPointsSuccessful called")
       if (err) return
-      dispatch(addAPointToOpponentPlayerMultiplayer(data))
+      if (data.socketId === mySocketId)
+        dispatch(addAPointToOpponentPlayerMultiplayer(data.points))
     })
   }, [])
 
@@ -63,7 +64,7 @@ const RandomWord = () => {
       dispatch(incrementTotalWordsTyped())
 
       //increase a point on socketio
-      incrementOpponentPlayerPoints(opponentSocketId)
+      incrementOpponentPlayerPoints(roomName, opponentSocketId)
 
       if (fluentWord) {
         dispatch(incrementFluentWordsTyped())
