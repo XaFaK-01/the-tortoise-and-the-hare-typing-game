@@ -10,20 +10,23 @@ const ChooseGameType = () => {
   return (
     <>
       <p
+        className="md:my-4 text-4xl md:text-4xl text-center mb-3 capitalize tracking-wider text-white font-extrabold"
         style={{
-          WebkitTextStroke: "1px Green",
+          fontFamily: "Gloria Hallelujah",
+          WebkitTextStroke: "1px black",
           WebkitTextFillColor: "White",
-          fontFamily: "Hachi Maru Pop",
         }}
-        className="text-4xl text-center mb-3 "
       >
-        Please select a game type
+        Please select game type
       </p>
       <div className="flex items-center flex-col justify-center">
         <Button
           mainColor="bg-green-500"
           hoverColor="bg-green-700"
           text="Single Player"
+          textSize="text-4xl"
+          paddingX="px-2"
+          paddingY="py-2"
           function_callback={() => dispatch(setGameType("singlePlayer"))}
         />
 
@@ -33,6 +36,9 @@ const ChooseGameType = () => {
               mainColor="bg-yellow-500"
               hoverColor="bg-yellow-700"
               text="Multiplayer"
+              textSize="text-4xl"
+              paddingX="px-2"
+              paddingY="py-2"
               function_callback={() => dispatch(setGameType("multiplayer"))}
             />
           </a>

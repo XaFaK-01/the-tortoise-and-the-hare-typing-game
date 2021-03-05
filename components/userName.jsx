@@ -24,7 +24,7 @@ const UserName = () => {
       <div className="flex items-center justify-center my-3">
         <form onSubmit={nameSetHandler}>
           <input
-            className="px-3 py-2 rounded-md font-extrabold text-center focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent bg-black bg-opacity-30 text-white"
+            className="px-1 py-2 w-full rounded-md font-extrabold text-center focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent bg-black bg-opacity-30 text-white"
             name="nameOfUser"
             type="text"
             placeholder="Type your name here"

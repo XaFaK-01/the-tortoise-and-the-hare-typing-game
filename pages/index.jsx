@@ -16,8 +16,8 @@ const Home = () => {
   return (
     <Layout>
       <PageHeading />
-      <div className="w-8/12 h-screen mx-auto ">
-        <div className="mt-10 p-8 bg-gray-700 bg-opacity-50 rounded-xl">
+      <div className="w-full md:w-8/12 h-screen mx-auto ">
+        <div className="mt-10 px-4 py-3 sm:py-8 sm:px-7 bg-gray-700 bg-opacity-50 rounded-xl">
           {gameType ? (
             gameType !== "multiplayer" && (
               <>

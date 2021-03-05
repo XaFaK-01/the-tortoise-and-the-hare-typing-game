@@ -16,6 +16,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if (!gameType) setCurrentPageTitle("Welcome! Please choose game type")
 
+    // page title conditions for singlePlauer Mode
     if (gameType === "singlePlayer") {
       if (!currentPlayerName)
         setCurrentPageTitle("Hello there! What is your name?")
@@ -25,6 +26,7 @@ const Layout = ({ children }) => {
         setCurrentPageTitle("Ready to play when you are...")
     }
 
+    // page title conditions for multiPlayer Mode
     if (gameType === "multiplayer") {
       if (!currentPlayerName)
         setCurrentPageTitle("Hello there! What is your name?")
@@ -45,7 +47,7 @@ const Layout = ({ children }) => {
   })
 
   return (
-    <div className="px-7 py-6 sm:px-32 sm:py-8 bg-forest-background-2 bg-no-repeat bg-cover text-white ">
+    <div className="px-4 pt-7 pb-1 sm:px-7 sm:py-6  bg-forest-background-2 bg-no-repeat bg-cover text-white ">
       <PageTitle title={currentPageTitle} />
 
       {children}

@@ -35,8 +35,15 @@ const MainGame = () => {
         charImgSrc={`images/${currentPlayerCharacter}.png`}
         charImgAlt={currentPlayerCharacter}
       />
+
       <img
-        className="fixed w-64 z-0 "
+        className="sm:hidden fixed w-20 z-0 "
+        style={{ left: "75%", top: "76%" }}
+        src="/images/finish_line.png"
+        alt="finish_line"
+      />
+      <img
+        className="hidden sm:block fixed w-64 z-0 "
         style={{ left: "82%", top: "53%" }}
         src="/images/finish_line.png"
         alt="finish_line"

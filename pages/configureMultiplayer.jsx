@@ -51,11 +51,11 @@ const Home = () => {
   return (
     <Layout>
       <PageHeading />
-      <div className="w-8/12  h-screen mx-auto ">
-        <div className="mt-10 p-8 bg-gray-700 bg-opacity-50 rounded-xl">
+      <div className="w-full md:w-8/12 h-screen mx-auto ">
+        <div className="mt-10 px-4 py-3 sm:py-8 sm:px-7 bg-gray-700 bg-opacity-50 rounded-xl">
           {currentPlayerName ? (
             <>
-              <p className="text-2xl bg- text-center font-extrabold my-1">
+              <p className="text-3xl md:text-2xl  text-center font-extrabold my-1">
                 {`Hello ${currentPlayerName} !`}
               </p>
               {userJoinedRoomSuccess ? (
@@ -80,6 +80,9 @@ const Home = () => {
                     mainColor="bg-blue-600"
                     hoverColor="bg-blue-400"
                     text="Create a room"
+                    textSize="text-4xl"
+                    paddingX="px-3"
+                    paddingY="py-2"
                     function_callback={() => setCreateRoom(true)}
                   />
 
@@ -87,6 +90,9 @@ const Home = () => {
                     mainColor="bg-blue-600"
                     hoverColor="bg-blue-400"
                     text="Join a room"
+                    textSize="text-4xl"
+                    paddingX="px-3"
+                    paddingY="py-2"
                     function_callback={() => setJoinRoom(true)}
                   />
                 </>

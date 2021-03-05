@@ -62,7 +62,7 @@ const JoinARoom = () => {
     <div>
       {joinRoomRequest ? (
         <div>
-          <p>
+          <p className="mt-6">
             {opponentPlayerName !== "Opponent"
               ? `Joined room ${nameOfRoom}, created by ${opponentPlayerName}`
               : "Joining room, please wait..."}
@@ -72,17 +72,31 @@ const JoinARoom = () => {
               <p>Characters chosen!</p>
               <p>Your player character: {currentPlayerCharacter}</p>
               <p>Opponent player character: {opponentPlayerCharacter}</p>
-              <p>Game will start any minute now...!</p>
+              <p>Game will start any second now...!</p>
             </div>
+          )}
+          {currentPlayerCharacter ? (
+            <img
+              className="w-12 sm:w-32 mx-auto mt-4"
+              src="images/three_dots_loader.svg"
+              alt="three_dots_loader.svg"
+            />
+          ) : (
+            <img
+              className="w-28 sm:w-32 mx-auto mt-4"
+              src="images/rings_loader.svg"
+              alt="rings_loader.svg"
+            />
           )}
         </div>
       ) : (
         <form onSubmit={joinARoomHandler}>
           <input
-            className="w-full font-bold px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-transparent"
+            className="px-1 py-2 w-full rounded-md font-extrabold text-center focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent bg-black bg-opacity-30 text-white"
             name="roomName"
             type="text"
             value={nameOfRoom}
+            required={true}
             placeholder="Please type a room name to join"
             onChange={(e) => setNameOfRoom(e.target.value)}
           />

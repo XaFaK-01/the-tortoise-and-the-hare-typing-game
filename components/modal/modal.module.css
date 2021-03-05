@@ -21,8 +21,6 @@
 .modal {
   position: fixed;
   z-index: 50;
-  /* background-color: green; */
-  /* --tw-bg-opacity: 0.8; */
   padding: 1rem;
   box-sizing: border-box;
   transition-property: all;
