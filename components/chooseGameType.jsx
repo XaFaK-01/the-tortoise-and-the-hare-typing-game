@@ -29,14 +29,7 @@ const ChooseGameType = () => {
           paddingY="py-2"
           function_callback={() => dispatch(setGameType("singlePlayer"))}
         />
-
-<<<<<<< HEAD
-        <Button
-          mainColor="bg-yellow-500"
-          hoverColor="bg-yellow-700"
-          text="Multiplayer"
-        />
-=======
+      
         <Link className="outline-none" href="/configureMultiplayer">
           <a className="w-full">
             <Button
@@ -50,7 +43,7 @@ const ChooseGameType = () => {
             />
           </a>
         </Link>
->>>>>>> multiplayer
+
       </div>
     </>
   )
