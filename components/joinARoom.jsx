@@ -15,42 +15,34 @@ import {
 
 import { selectCurrentPlayerCharacter } from "../actions/currentPlayerActions"
 import { selectOpponentPlayerCharacter } from "../actions/opponentPlayerActions"
-import { userJoinedRoom } from "../functions/socketio"
+import { setOpponentPlayerName } from "../actions/opponentPlayerActions"
 
 import Router from "next/router"
 
-const JoinRoomForm = () => {
+const JoinARoom = () => {
   const dispatch = useDispatch()
   const [nameOfRoom, setNameOfRoom] = useState("")
   const [joinRoomRequest, setJoinRoomRequest] = useState(false)
 
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
-  const { currentPlayerCharacter } = currentPlayerInfo
+  const { currentPlayerCharacter, currentPlayerName } = currentPlayerInfo
 
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
-  const { opponentPlayerCharacter } = opponentPlayerInfo
+  const { opponentPlayerCharacter, opponentPlayerName } = opponentPlayerInfo
 
-  const joinARoomHandler = () => {
-    dispatch(setRoomName(nameOfRoom))
-    // setRoomCreateSuccess(true)
-    initiateSocket(nameOfRoom)
+  const joinARoomHandler = (e) => {
+    e.preventDefault()
     setJoinRoomRequest(true)
+    dispatch(setRoomName(nameOfRoom))
+    initiateSocket({ nameOfRoom, currentPlayerName })
   }
 
   useEffect(() => {
-    userJoinedRoom((err, socketid) => {
-      if (err) return
-
-      dispatch(setMySocketId(socketid))
-    })
-
     socketIdsSuccessful((err, data) => {
       if (err) return
-
-      console.log("socketIdsSuccessful called")
-      console.log("data: ", data)
       dispatch(setMySocketId(data.opponentSocketId))
       dispatch(setOpponentSocketId(data.currentUserSocketId))
+      dispatch(setOpponentPlayerName(data.opponentName))
     })
 
     subscribeToRoomCharacters((err, data) => {
@@ -66,12 +58,15 @@ const JoinRoomForm = () => {
       }
     })
   })
-
   return (
     <div>
       {joinRoomRequest ? (
         <div>
-          <p>Joining room, please wait...</p>
+          <p>
+            {opponentPlayerName !== "Opponent"
+              ? `Joined room ${nameOfRoom}, created by ${opponentPlayerName}`
+              : "Joining room, please wait..."}
+          </p>
           {currentPlayerCharacter && (
             <div>
               <p>Characters chosen!</p>
@@ -82,7 +77,7 @@ const JoinRoomForm = () => {
           )}
         </div>
       ) : (
-        <form>
+        <form onSubmit={joinARoomHandler}>
           <input
             className="w-full font-bold px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-transparent"
             name="roomName"
@@ -95,7 +90,9 @@ const JoinRoomForm = () => {
             mainColor="bg-blue-600"
             hoverColor="bg-blue-400"
             text="Join room"
-            function_callback={joinARoomHandler}
+            textSize="text-3xl"
+            paddingX="px-3"
+            paddingY="py-1"
           />
         </form>
       )}
@@ -103,4 +100,4 @@ const JoinRoomForm = () => {
   )
 }
 
-export default JoinRoomForm
+export default JoinARoom

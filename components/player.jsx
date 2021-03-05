@@ -1,16 +1,28 @@
+/* eslint-disable react/prop-types */
 import React from "react"
 
 // eslint-disable-next-line react/prop-types
-const Player = ({ position, charImgSrc, charImgAlt }) => {
+const Player = ({
+  position,
+  charImgSrc,
+  charImgAlt,
+  playerName,
+  isCurrentPlayer,
+}) => {
   return (
-    <>
-      <img
-        className="mt-44 w-32 absolute z-20 transition-all duration-500 ease-in-out "
-        src={charImgSrc}
-        alt={charImgAlt}
-        style={{ left: position + "%", top: "48vh" }}
-      />
-    </>
+    <div
+      className="absolute z-20  transition-all duration-500 ease-in-out"
+      style={{ left: position + "%", top: "48vh" }}
+    >
+      <div
+        className={`w-min mx-auto mt-28 px-3 py-2 rounded-lg ${
+          isCurrentPlayer ? "bg-green-600 text-white " : "bg-white"
+        }`}
+      >
+        <p className="">{playerName}</p>
+      </div>
+      <img className="mt-14 w-32 " src={charImgSrc} alt={charImgAlt} />
+    </div>
   )
 }
 

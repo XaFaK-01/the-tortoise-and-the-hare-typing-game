@@ -28,7 +28,7 @@ const ChooseGameType = () => {
         />
 
         <Link className="outline-none" href="/configureMultiplayer">
-          <a>
+          <a className="w-full">
             <Button
               mainColor="bg-yellow-500"
               hoverColor="bg-yellow-700"

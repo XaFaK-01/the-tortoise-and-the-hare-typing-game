@@ -6,11 +6,19 @@ const Button = ({
   text,
   function_callback,
   textSize,
+  type,
+  paddingX,
+  paddingY,
 }) => {
   return (
-    <div
+    <button
+      type={type && type}
       onClick={function_callback && function_callback}
-      className={`${mainColor} hover:${hoverColor} rounded-2xl px-5 py-3 border-4 cursor-pointer my-3 transition-all duration-500 ease-in-out`}
+      className={`${mainColor} hover:${hoverColor} rounded-2xl ${
+        paddingX ? paddingX : "px-5"
+      } ${
+        paddingY ? paddingY : "py-3"
+      } border-4 cursor-pointer my-3 transition-all duration-500 ease-in-out w-full`}
     >
       <p
         style={{ fontFamily: "Schoolbell" }}
@@ -20,7 +28,7 @@ const Button = ({
       >
         {text}
       </p>
-    </div>
+    </button>
   )
 }
 

@@ -2,6 +2,7 @@ import {
   CURRENT_PLAYER_POINT_INCREASE,
   GENERATE_NEW_WORD_ON_SUCCESS,
   CURRENT_PLAYER_CHARACTER_SELECT,
+  SET_CURRENT_PLAYER_NAME,
 } from "../constants/constants.js"
 
 import randomWords from "random-words"
@@ -33,5 +34,12 @@ export const generateNewWordOnSuccess = () => (dispatch) => {
   dispatch({
     type: GENERATE_NEW_WORD_ON_SUCCESS,
     payload: randomWords(),
+  })
+}
+
+export const setCurrentPlayerName = (name) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_PLAYER_NAME,
+    payload: name,
   })
 }

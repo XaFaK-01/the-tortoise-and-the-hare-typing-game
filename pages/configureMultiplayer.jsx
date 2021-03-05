@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 
 import Layout from "../HOC/layout"
 import Button from "../components/button"
-import RoomNameForm from "../components/roomNameForm"
-import JoinRoomForm from "../components/joinRoomForm"
+import CreateARoom from "../components/createARoom"
+import JoinARoom from "../components/joinARoom"
 
 import CharacterChosen from "../components/characterChosen"
 import ChooseCharacter from "../components/chooseCharacter"
@@ -13,85 +13,87 @@ import ChooseCharacter from "../components/chooseCharacter"
 import { userJoinedRoom } from "../functions/socketio"
 
 import { setMySocketId, setOpponentSocketId } from "../actions/gameStateActions"
+import { setOpponentPlayerName } from "../actions/opponentPlayerActions"
+
+import UserName from "../components/userName"
+import PageHeading from "../components/pageHeading"
 
 const Home = () => {
   const dispatch = useDispatch()
 
   const [createRoom, setCreateRoom] = useState(false)
   const [joinRoom, setJoinRoom] = useState(false)
-  const [userJoinedRoomSuccess, setUserJoinedRoomSuccess] = useState("")
+  const [userJoinedRoomSuccess, setUserJoinedRoomSuccess] = useState(false)
 
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
-  const gameState = useSelector((state) => state.gameState)
+  const { currentPlayerCharacter, currentPlayerName } = currentPlayerInfo
 
-  const { currentPlayerCharacter } = currentPlayerInfo
+  const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
+  const { opponentPlayerName } = opponentPlayerInfo
+
+  const gameState = useSelector((state) => state.gameState)
   const { gameType } = gameState
 
   useEffect(() => {
     if (!gameType) {
       Router.push("/")
     }
-    userJoinedRoom((err, socketids) => {
+    userJoinedRoom((err, data) => {
+      console.log("data: ", data)
       if (err) return
-      setUserJoinedRoomSuccess("A user have joined the room")
-      dispatch(setMySocketId(socketids[0]))
-      dispatch(setOpponentSocketId(socketids[1]))
+      setUserJoinedRoomSuccess(true)
+      dispatch(setMySocketId(data.requiredSocketIds[0]))
+      dispatch(setOpponentSocketId(data.requiredSocketIds[1]))
+      dispatch(setOpponentPlayerName(data.opponentName))
     })
   })
 
   return (
     <Layout>
-      <div className="w-full h-screen mx-auto ">
-        <p
-          className="text-5xl my-4 text-center capitalize tracking-wider text-white font-extrabold"
-          style={{
-            fontFamily: "Gloria Hallelujah",
-            WebkitTextStroke: "3px black",
-            WebkitTextFillColor: "White",
-          }}
-        >
-          Welcome to The Tortoise and the Hare game!
-        </p>
-        <p
-          className="text-4xl my-4 text-center capitalize tracking-wider text-white font-extrabold"
-          style={{
-            fontFamily: "Gloria Hallelujah",
-            WebkitTextStroke: "2px black",
-            WebkitTextFillColor: "white",
-          }}
-        >
-          Typing Edition
-        </p>
+      <PageHeading />
+      <div className="w-8/12  h-screen mx-auto ">
         <div className="mt-10 p-8 bg-gray-700 bg-opacity-50 rounded-xl">
-          <p>{userJoinedRoomSuccess}</p>
-          {userJoinedRoomSuccess !== "" ? (
+          {currentPlayerName ? (
             <>
-              {currentPlayerCharacter ? (
-                <CharacterChosen />
+              <p className="text-2xl bg- text-center font-extrabold my-1">
+                {`Hello ${currentPlayerName} !`}
+              </p>
+              {userJoinedRoomSuccess ? (
+                <>
+                  <p className="text-center text-xl my-3">
+                    {userJoinedRoomSuccess &&
+                      opponentPlayerName + " has joined game"}
+                  </p>
+                  {currentPlayerCharacter ? (
+                    <CharacterChosen />
+                  ) : (
+                    <ChooseCharacter />
+                  )}
+                </>
+              ) : joinRoom ? (
+                <JoinARoom />
+              ) : createRoom ? (
+                <CreateARoom />
               ) : (
-                <ChooseCharacter />
+                <>
+                  <Button
+                    mainColor="bg-blue-600"
+                    hoverColor="bg-blue-400"
+                    text="Create a room"
+                    function_callback={() => setCreateRoom(true)}
+                  />
+
+                  <Button
+                    mainColor="bg-blue-600"
+                    hoverColor="bg-blue-400"
+                    text="Join a room"
+                    function_callback={() => setJoinRoom(true)}
+                  />
+                </>
               )}
             </>
-          ) : joinRoom ? (
-            <JoinRoomForm />
-          ) : createRoom ? (
-            <RoomNameForm />
           ) : (
-            <>
-              <Button
-                mainColor="bg-blue-600"
-                hoverColor="bg-blue-400"
-                text="Create a room"
-                function_callback={() => setCreateRoom(true)}
-              />
-
-              <Button
-                mainColor="bg-blue-600"
-                hoverColor="bg-blue-400"
-                text="Join a room"
-                function_callback={() => setJoinRoom(true)}
-              />
-            </>
+            <UserName />
           )}
         </div>
       </div>

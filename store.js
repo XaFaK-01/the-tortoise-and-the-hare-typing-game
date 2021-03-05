@@ -30,10 +30,12 @@ const initialState = {
     currentPlayerCharacter: "",
     currentPlayerPosition: 0,
     randomlyGeneratedWord: randomWords(),
+    currentPlayerName: "",
   },
   opponentPlayerInfo: {
     opponentPlayerCharacter: "",
     opponentPlayerPosition: 0,
+    opponentPlayerName: "Opponent",
   },
   gameState: {
     gameStart: false,

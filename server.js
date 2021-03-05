@@ -19,12 +19,19 @@ app.prepare().then(async () => {
   // logging into the console
 
   var socketids = []
+  var playerNames = []
   io.on("connection", (socket) => {
-    socket.on("join", (room) => {
-      console.log(`Socket ${socket.id} joining ${room}`)
-      socket.join(room)
+    // ----joining room----
+    socket.on("join", (data) => {
+      const { nameOfRoom, currentPlayerName } = data
+
+      console.log(`Socket ${socket.id} joining ${nameOfRoom}`)
+      socket.join(nameOfRoom)
+
+      console.log("joining room")
 
       socketids.push(socket.id)
+      playerNames.push(currentPlayerName)
 
       // getting the last two
       let requiredSocketIds = [
@@ -32,18 +39,38 @@ app.prepare().then(async () => {
         socketids[socketids.length - 1],
       ]
 
-      // / sending to all clients in 'game' room except sender
-      // socket.to(room).emit("user joined", "A player has joined the game!")
-      socket.broadcast.to(room).emit("user joined", requiredSocketIds)
+      // / sending to all clients in  room except sender
+      socket.broadcast.to(nameOfRoom).emit("user joined", {
+        requiredSocketIds,
+        opponentName: playerNames[playerNames.length - 1],
+      })
+
+      console.log("playerNames: ", playerNames)
     })
 
+    // ----sharing opponent names----
+    socket.on("share opponent name", (data) => {
+      const { nameOfRoom, currentPlayerName } = data
+      console.log(
+        `Socket ${socket.id} sharing opponent name ${currentPlayerName}`
+      )
+
+      socket.broadcast
+        .to(nameOfRoom)
+        .emit("sharing opponent name successful", currentPlayerName)
+    })
+
+    // ----user disconnection----
     socket.on("disconnect", () => {
       console.log(`socket: ${socket.id} disconnected!`)
 
       var i = socketids.indexOf(socket)
       socketids.splice(i, 1)
+
+      playerNames.splice(i, 1)
     })
 
+    // ----characters selection----
     socket.on("characters chosen", (data) => {
       const { room, currentPlayerCharacter, opponentPlayerCharacter } = data
       console.log(`characters chosen for room: ${room}`)
@@ -55,6 +82,7 @@ app.prepare().then(async () => {
       )
     })
 
+    // ----setting socketids----
     socket.on("set socketids", (data) => {
       const { room, currentUserSocketId, opponentSocketId } = data
       console.log("room: ", room)
@@ -66,9 +94,10 @@ app.prepare().then(async () => {
         room,
         currentUserSocketId,
         opponentSocketId,
+        opponentName: playerNames[playerNames.length - 2],
       })
     })
-
+    // ----starting game for both players----
     socket.on("start the game for both players", (room) => {
       console.log(`starting game for room: ${room}`)
       socket.to(room).emit("game start successful")
@@ -76,40 +105,20 @@ app.prepare().then(async () => {
       console.log(io.of("/").in(room).clients)
     })
 
+    // ----incrementing opponent player points----
     socket.on("increment opponent player points", (data) => {
       const { roomId, socketId } = data
-      // console.log(`increment opponent player points for socketid: ${socketId}`)
-      // console.log(`increment opponent player points for roomId: ${roomId}`)
 
       console.log(
         `socket ${socket.id} wants to increment points for ${socketId}`
       )
       console.log(`socketids: `, socketids)
-      // socket
-      //   .to(socketId)
-      //   .emit("increment opponent player points successful", 10)
-
-      // socket.broadcast
-      // .to(roomId)
-      // .emit("increment opponent player points successful", 10)
 
       socket.broadcast.emit("increment opponent player points successful", {
         points: 10,
         socketId,
       })
-
-      // socket.to(roomId).emit("increment opponent player points successful", 10)
     })
-
-    socket.on("chat", (data) => {
-      const { message, room } = data
-      console.log(`msg: ${message}, room: ${room}`)
-      io.to(room).emit("chat", message, room)
-    })
-
-    // socket.on("chat message", (msg) => {
-    //   io.emit("chat message", msg)
-    // })
   })
 
   server.all("*", (req, res) => {

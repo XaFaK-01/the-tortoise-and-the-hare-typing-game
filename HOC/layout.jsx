@@ -1,5 +1,6 @@
 import React from "react"
 
+// eslint-disable-next-line react/prop-types
 const Layout = ({ children }) => {
   return (
     <div className="px-7 py-6 sm:px-32 sm:py-8 bg-forest-background-2 bg-no-repeat bg-cover text-white ">

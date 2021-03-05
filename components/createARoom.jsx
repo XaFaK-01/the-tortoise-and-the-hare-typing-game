@@ -1,25 +1,31 @@
 import React, { useState } from "react"
-import Button from "../components/button"
+import Button from "./button"
 import { initiateSocket } from "../functions/socketio"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setRoomName } from "../actions/gameStateActions"
-const RoomNameForm = () => {
+
+const CreateARoom = () => {
   const dispatch = useDispatch()
   const [nameOfRoom, setNameOfRoom] = useState("")
   const [roomCreateSuccess, setRoomCreateSuccess] = useState(false)
 
-  const createARoomHandler = () => {
-    dispatch(setRoomName(nameOfRoom))
+  const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
+  const { currentPlayerName } = currentPlayerInfo
+
+  const createARoomHandler = (e) => {
+    e.preventDefault()
     setRoomCreateSuccess(true)
-    initiateSocket(nameOfRoom)
+    dispatch(setRoomName(nameOfRoom))
+    initiateSocket({ nameOfRoom, currentPlayerName })
   }
+
   return (
     <div>
       {roomCreateSuccess ? (
         <p>Please ask your friend to join room: {nameOfRoom}</p>
       ) : (
         <p>
-          <form>
+          <form onSubmit={createARoomHandler}>
             <input
               className="w-full font-bold px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-transparent"
               name="roomName"
@@ -32,7 +38,7 @@ const RoomNameForm = () => {
               mainColor="bg-blue-600"
               hoverColor="bg-blue-400"
               text="Create room"
-              function_callback={createARoomHandler}
+              type="submit"
             />
           </form>
         </p>
@@ -41,4 +47,4 @@ const RoomNameForm = () => {
   )
 }
 
-export default RoomNameForm
+export default CreateARoom

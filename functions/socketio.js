@@ -1,17 +1,19 @@
 import io from "socket.io-client"
 let socket
 
-export const initiateSocket = (room) => {
+export const initiateSocket = (data) => {
   socket = io()
-  console.log(`Connecting socket...`)
-  if (socket && room) socket.emit("join", room)
+  // console.log(`Connecting socket...`)
+  console.log(`initiating socket...`)
+
+  if (socket && data) socket.emit("join", data)
 }
 
 export const userJoinedRoom = (cb) => {
   if (!socket) return true
-  socket.on("user joined", (socketid) => {
+  socket.on("user joined", (data) => {
     console.log("Websocket event received for user joining!")
-    return cb(null, socketid)
+    return cb(null, data)
   })
 }
 
