@@ -30,10 +30,12 @@ const initialState = {
     currentPlayerCharacter: "",
     currentPlayerPosition: 0,
     randomlyGeneratedWord: randomWords(),
+    currentPlayerName: "",
   },
   opponentPlayerInfo: {
     opponentPlayerCharacter: "",
     opponentPlayerPosition: 0,
+    opponentPlayerName: "Opponent",
   },
   gameState: {
     gameStart: false,
@@ -45,6 +47,9 @@ const initialState = {
     weakKeyStrokes: [],
     typingCountdown: 0,
     charactersTyped: 0,
+    roomName: null,
+    mySocketId: "",
+    opponentSocketId: "",
   },
 }
 

@@ -9,6 +9,9 @@ import {
   ADD_WEAK_KEY_STROKE,
   START_TYPING_COUNTDOWN,
   INCREMENT_CHARACTER_TYPED,
+  SET_ROOM_NAME,
+  SET_MY_SOCKET_ID,
+  SET_OPPONENT_SOCKET_ID,
 } from "../constants/constants.js"
 
 export const gameStateReducers = (state = {}, action) => {
@@ -64,6 +67,24 @@ export const gameStateReducers = (state = {}, action) => {
       return {
         ...state,
         charactersTyped: state.charactersTyped + 1,
+      }
+
+    case SET_ROOM_NAME:
+      return {
+        ...state,
+        roomName: action.payload,
+      }
+
+    case SET_MY_SOCKET_ID:
+      return {
+        ...state,
+        mySocketId: action.payload,
+      }
+
+    case SET_OPPONENT_SOCKET_ID:
+      return {
+        ...state,
+        opponentSocketId: action.payload,
       }
 
     case RESET_GAME_STATE:

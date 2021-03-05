@@ -1,11 +1,13 @@
-import React from "react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import useKeypress from "../hooks/useKeypress"
 import { useDispatch, useSelector } from "react-redux"
 import {
   addAPointToCurrentPlayer,
   generateNewWordOnSuccess,
 } from "../actions/currentPlayerActions"
+
+import { addAPointToOpponentPlayerMultiplayer } from "../actions/opponentPlayerActions"
+
 import {
   incrementTotalWordsTyped,
   incrementFluentWordsTyped,
@@ -14,12 +16,20 @@ import {
   incrementCharactersTyped,
 } from "../actions/gameStateActions"
 
+import {
+  incrementOpponentPlayerPoints,
+  incrementOpponentPlayerPointsSuccessful,
+} from "../functions/socketio"
+
 const RandomWord = () => {
   const dispatch = useDispatch()
   const [correctKeyPressed, setCorrectKeyPressed] = useState(() => true)
 
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { randomlyGeneratedWord: theRandomWord } = currentPlayerInfo
+
+  const gameState = useSelector((state) => state.gameState)
+  const { mySocketId, opponentSocketId, roomName } = gameState
 
   const [randomlyGeneratedWord, setRandomlyGeneratedWord] = useState(
     () => theRandomWord,
@@ -29,8 +39,16 @@ const RandomWord = () => {
   const [commenceCountDown, setCommenceCountDown] = useState(() => false)
 
   useEffect(() => {
+    incrementOpponentPlayerPointsSuccessful((err, data) => {
+      console.log("incrementOpponentPlayerPointsSuccessful called")
+      if (err) return
+      if (data.socketId === mySocketId)
+        dispatch(addAPointToOpponentPlayerMultiplayer(data.points))
+    })
+  }, [])
+
+  useEffect(() => {
     if (commenceCountDown) {
-      console.log("commenceCountDown called")
       dispatch(startTypingCountdown())
     }
   }, [commenceCountDown])
@@ -41,9 +59,12 @@ const RandomWord = () => {
 
   useEffect(() => {
     if (randomlyGeneratedWord.length === 0) {
-      dispatch(addAPointToCurrentPlayer(3))
+      dispatch(addAPointToCurrentPlayer(10))
       dispatch(generateNewWordOnSuccess())
       dispatch(incrementTotalWordsTyped())
+
+      //increase a point on socketio
+      incrementOpponentPlayerPoints(roomName, opponentSocketId)
 
       if (fluentWord) {
         dispatch(incrementFluentWordsTyped())

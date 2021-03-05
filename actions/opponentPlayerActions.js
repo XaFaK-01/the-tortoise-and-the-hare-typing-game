@@ -1,7 +1,8 @@
 import {
   OPPONENT_PLAYER_CHARACTER_SELECT,
   OPPONENT_PLAYER_POINT_INCREASE,
-  INITIALIZE_GAME,
+  OPPONENT_PLAYER_POINT_INCREASE_MULTIPLAYER,
+  SET_OPPONENT_PLAYER_NAME,
 } from "../constants/constants.js"
 
 export const selectOpponentPlayerCharacter = () => (dispatch, getState) => {
@@ -32,5 +33,26 @@ export const addAPointToOpponentPlayer = () => (dispatch, getState) => {
         opponentPlayerInfo.opponentPlayerPosition +
         Math.floor(Math.random() * 8),
     },
+  })
+}
+
+export const addAPointToOpponentPlayerMultiplayer = (difficultyValue) => (
+  dispatch,
+  getState
+) => {
+  const { opponentPlayerInfo } = getState()
+  dispatch({
+    type: OPPONENT_PLAYER_POINT_INCREASE_MULTIPLAYER,
+    payload: {
+      opponentPlayerPosition:
+        opponentPlayerInfo.opponentPlayerPosition + difficultyValue,
+    },
+  })
+}
+
+export const setOpponentPlayerName = (name) => (dispatch) => {
+  dispatch({
+    type: SET_OPPONENT_PLAYER_NAME,
+    payload: name,
   })
 }

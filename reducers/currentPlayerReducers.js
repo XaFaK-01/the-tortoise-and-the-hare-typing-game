@@ -3,6 +3,7 @@ import {
   GENERATE_NEW_WORD_ON_SUCCESS,
   CURRENT_PLAYER_CHARACTER_SELECT,
   RESET_CURRENT_PLAYER_INFO,
+  SET_CURRENT_PLAYER_NAME,
 } from "../constants/constants.js"
 
 export const currentPlayerInfoReducer = (state = {}, action) => {
@@ -24,9 +25,17 @@ export const currentPlayerInfoReducer = (state = {}, action) => {
         ...state,
         randomlyGeneratedWord: action.payload,
       }
+
+    case SET_CURRENT_PLAYER_NAME:
+      return {
+        ...state,
+        currentPlayerName: action.payload,
+      }
+
     case RESET_CURRENT_PLAYER_INFO:
       return {
         ...state,
+        currentPlayerName: "",
         currentPlayerCharacter: "",
         currentPlayerPosition: 0,
       }

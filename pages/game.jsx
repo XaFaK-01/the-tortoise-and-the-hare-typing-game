@@ -19,7 +19,7 @@ export default function Home() {
 
   const { currentPlayerPosition, currentPlayerCharacter } = currentPlayerInfo
   const { opponentPlayerPosition } = opponentPlayerInfo
-  const { gameStart } = gameState
+  const { gameStart, gameType } = gameState
 
   const race_end_point = 87
 
@@ -38,8 +38,8 @@ export default function Home() {
   })
 
   useEffect(() => {
-    if (gameStart) dispatch(startOpponentRun())
-  }, [dispatch, gameStart])
+    if (gameStart && gameType === "singlePlayer") dispatch(startOpponentRun())
+  }, [dispatch, gameStart, gameType])
 
   const setShowRulesHandler = (value) => {
     setShowRules(value)
