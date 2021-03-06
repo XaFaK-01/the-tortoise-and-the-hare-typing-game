@@ -39,7 +39,6 @@ const Home = () => {
       Router.push("/")
     }
     userJoinedRoom((err, data) => {
-      console.log("data: ", data)
       if (err) return
       setUserJoinedRoomSuccess(true)
       dispatch(setMySocketId(data.requiredSocketIds[0]))

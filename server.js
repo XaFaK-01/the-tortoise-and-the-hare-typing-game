@@ -25,10 +25,10 @@ app.prepare().then(async () => {
     socket.on("join", (data) => {
       const { nameOfRoom, currentPlayerName } = data
 
-      console.log(`Socket ${socket.id} joining ${nameOfRoom}`)
+      // console.log(`Socket ${socket.id} joining ${nameOfRoom}`)
       socket.join(nameOfRoom)
 
-      console.log("joining room")
+      // console.log("joining room")
 
       socketids.push(socket.id)
       playerNames.push(currentPlayerName)
@@ -45,15 +45,15 @@ app.prepare().then(async () => {
         opponentName: playerNames[playerNames.length - 1],
       })
 
-      console.log("playerNames: ", playerNames)
+      // console.log("playerNames: ", playerNames)
     })
 
     // ----sharing opponent names----
     socket.on("share opponent name", (data) => {
       const { nameOfRoom, currentPlayerName } = data
-      console.log(
-        `Socket ${socket.id} sharing opponent name ${currentPlayerName}`
-      )
+      // console.log(
+      //   `Socket ${socket.id} sharing opponent name ${currentPlayerName}`
+      // )
 
       socket.broadcast
         .to(nameOfRoom)
@@ -62,7 +62,7 @@ app.prepare().then(async () => {
 
     // ----user disconnection----
     socket.on("disconnect", () => {
-      console.log(`socket: ${socket.id} disconnected!`)
+      // console.log(`socket: ${socket.id} disconnected!`)
 
       var i = socketids.indexOf(socket)
       socketids.splice(i, 1)
@@ -73,7 +73,7 @@ app.prepare().then(async () => {
     // ----characters selection----
     socket.on("characters chosen", (data) => {
       const { room, currentPlayerCharacter, opponentPlayerCharacter } = data
-      console.log(`characters chosen for room: ${room}`)
+      // console.log(`characters chosen for room: ${room}`)
       io.to(room).emit(
         "characters chosen successful",
         room,
@@ -84,12 +84,14 @@ app.prepare().then(async () => {
 
     // ----setting socketids----
     socket.on("set socketids", (data) => {
-      const { room, currentUserSocketId, opponentSocketId } = data
-      console.log("room: ", room)
-      console.log("currentUserSocketId: ", currentUserSocketId)
-      console.log("opponentSocketId: ", opponentSocketId)
+      const { room, currentUserSocketId, opponentSocketId } = data(
+        "room: ",
+        room
+      )
+      // console.log("currentUserSocketId: ", currentUserSocketId)
+      // console.log("opponentSocketId: ", opponentSocketId)
 
-      console.log(`characters chosen for room: ${room}`)
+      // console.log(`characters chosen for room: ${room}`)
       io.to(room).emit("set socketids successful", {
         room,
         currentUserSocketId,
@@ -99,23 +101,23 @@ app.prepare().then(async () => {
     })
     // ----starting game for both players----
     socket.on("start the game for both players", (room) => {
-      console.log(`starting game for room: ${room}`)
+      // console.log(`starting game for room: ${room}`)
       socket.to(room).emit("game start successful")
 
-      console.log(io.of("/").in(room).clients)
+      // console.log(io.of("/").in(room).clients)
     })
 
     // ----incrementing opponent player points----
     socket.on("increment opponent player points", (data) => {
       const { roomId, socketId } = data
 
-      console.log(
-        `socket ${socket.id} wants to increment points for ${socketId}`
-      )
-      console.log(`socketids: `, socketids)
+      // console.log(
+      //   `socket ${socket.id} wants to increment points for ${socketId}`
+      // )
+      // console.log(`socketids: `, socketids)
 
       socket.broadcast.emit("increment opponent player points successful", {
-        points: 10,
+        points: 8,
         socketId,
       })
     })

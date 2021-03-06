@@ -36,13 +36,13 @@ const CreateARoom = () => {
         <div className="mt-3">
           <form onSubmit={createARoomHandler}>
             <input
-              className="px-1 py-2 w-full rounded-md font-extrabold text-center focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent bg-black bg-opacity-30 text-white"
+              className="px-1 py-2 w-full lowercase rounded-md font-extrabold text-center focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent bg-black bg-opacity-30 text-white"
               name="roomName"
               type="text"
               required={true}
               value={nameOfRoom}
               placeholder="Please type a room name to create"
-              onChange={(e) => setNameOfRoom(e.target.value)}
+              onChange={(e) => setNameOfRoom(e.target.value.toLowerCase())}
             />
             <Button
               mainColor="bg-blue-600"

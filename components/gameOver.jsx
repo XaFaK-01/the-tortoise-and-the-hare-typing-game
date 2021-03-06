@@ -10,8 +10,16 @@ const GameOver = ({ race_end_point }) => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
 
-  const { currentPlayerPosition, currentPlayerCharacter } = currentPlayerInfo
-  const { opponentPlayerCharacter, opponentPlayerPosition } = opponentPlayerInfo
+  const {
+    currentPlayerPosition,
+    currentPlayerCharacter,
+    currentPlayerName,
+  } = currentPlayerInfo
+  const {
+    opponentPlayerCharacter,
+    opponentPlayerPosition,
+    opponentPlayerName,
+  } = opponentPlayerInfo
 
   const resetFullGameHandler = () => {
     dispatch(resetFullGame())
@@ -26,33 +34,33 @@ const GameOver = ({ race_end_point }) => {
             : "text-red-500"
         }`}
       >
-        {opponentPlayerPosition >= race_end_point
-          ? opponentPlayerCharacter + " Won!"
-          : currentPlayerCharacter + " Won!"}
+        {opponentPlayerPosition >= race_end_point ? "You lost!" : "You won!"}
       </p>
 
       <p
-        className={`text-3xl capitalize text-center mt-5 ${
+        className={`text-2xl capitalize text-center mt-5 ${
           currentPlayerPosition >= race_end_point
             ? "text-blue-700"
             : "text-pink-700"
         }`}
       >
         {opponentPlayerPosition >= race_end_point
-          ? "You lost...!"
-          : "You won...!"}
+          ? `${opponentPlayerName} won, yuck...!`
+          : `${currentPlayerName}  won, yeah!`}
       </p>
 
-      <p className="text-4xl text-yellow-500 capitalize text-center mt-5">
+      <p className="text-2xl text-yellow-500 capitalize text-center mt-5">
         game over...
       </p>
 
-      <div className="mt-3 w-2/12 mx-auto">
+      <div className="mt-3 sm:w-2/12 mx-auto">
         <Button
           mainColor="bg-purple-700"
           hoverColor="bg-purple-500"
-          text="Play Again"
-          textSize="text-2xl"
+          text="Play Again?"
+          textSize="text-3xl"
+          paddingX="px-3"
+          paddingY="py-2"
           function_callback={() => resetFullGameHandler()}
         />
       </div>

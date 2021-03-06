@@ -26,7 +26,7 @@ const TypingSummary = () => {
   let WPM = Math.round(charactersTyped / 5 / (typingCountdown / 100))
 
   return (
-    <div className="bg-gray-700 bg-opacity-40 py-1 pb-3 px-10 relative max-h-72 overflow-y-auto rounded-xl w-max mx-auto">
+    <div className=" py-1 pb-3 px-2 sm:px-10 relative max-h-72 overflow-y-auto overflow-x-hidden rounded-xl sm:w-max mx-auto bg-gray-700 bg-opacity-40">
       <h1 className="text-4xl text-center my-3">Typing Report</h1>
       <p className=" text-center">
         Total words typed: <strong>{totalWordsTyped}</strong>
@@ -45,7 +45,7 @@ const TypingSummary = () => {
       {Object.keys(weakKeyStrokesCountedObject).length === 0 &&
       weakKeyStrokesCountedObject.constructor === Object ? (
         <>
-          <p className="text-center mt-3">No weak keystrokes!</p>
+          <p className="text-center mt-3">No weak keystrokes,</p>
           <p className="text-center ">Good job!!!</p>
         </>
       ) : (

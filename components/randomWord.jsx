@@ -21,6 +21,8 @@ import {
   incrementOpponentPlayerPointsSuccessful,
 } from "../functions/socketio"
 
+import Keyboard from "./keyboard"
+
 const RandomWord = () => {
   const dispatch = useDispatch()
   const [correctKeyPressed, setCorrectKeyPressed] = useState(() => true)
@@ -40,7 +42,6 @@ const RandomWord = () => {
 
   useEffect(() => {
     incrementOpponentPlayerPointsSuccessful((err, data) => {
-      console.log("incrementOpponentPlayerPointsSuccessful called")
       if (err) return
       if (data.socketId === mySocketId)
         dispatch(addAPointToOpponentPlayerMultiplayer(data.points))
@@ -59,7 +60,7 @@ const RandomWord = () => {
 
   useEffect(() => {
     if (randomlyGeneratedWord.length === 0) {
-      dispatch(addAPointToCurrentPlayer(10))
+      dispatch(addAPointToCurrentPlayer(8))
       dispatch(generateNewWordOnSuccess())
       dispatch(incrementTotalWordsTyped())
 
@@ -99,28 +100,42 @@ const RandomWord = () => {
     () => correctKeyPressedHandler(),
     () => incorrectKeyPressedHandler()
   )
+
+  const virtualKeyboardKeyReleaseHandler = (button) => {
+    if (randomlyGeneratedWord.charAt(0) === button) correctKeyPressedHandler()
+    else if (randomlyGeneratedWord.charAt(0) !== button)
+      incorrectKeyPressedHandler()
+  }
+
   return (
-    <div className="flex justify-center">
-      <div className="inline-block p-3 bg-green-500 bg-opacity-20 rounded-lg">
-        {correctKeyPressed ? (
-          <p className="inline-block text-center text-green-800 font-semibold text-3xl">
-            {randomlyGeneratedWord}
+    <>
+      <div className="flex justify-center">
+        <div className="inline-block p-3 bg-green-500 bg-opacity-20 rounded-lg">
+          {correctKeyPressed ? (
+            <p className="inline-block text-center text-green-800 font-semibold text-3xl">
+              {randomlyGeneratedWord}
+            </p>
+          ) : (
+            <div>
+              <p className="inline-block text-center text-red-600 font-semibold text-3xl">
+                {randomlyGeneratedWord.charAt(0)}
+              </p>
+              <p className="inline-block text-center font-semibold text-3xl">
+                {randomlyGeneratedWord.substr(1)}
+              </p>
+            </div>
+          )}
+          <p className="text-center text-green-900 font-semibold text-xl">
+            {randomlyGeneratedWord.length}
           </p>
-        ) : (
-          <div>
-            <p className="inline-block text-center text-red-600 font-semibold text-3xl">
-              {randomlyGeneratedWord.charAt(0)}
-            </p>
-            <p className="inline-block text-center font-semibold text-3xl">
-              {randomlyGeneratedWord.substr(1)}
-            </p>
-          </div>
-        )}
-        <p className="text-center text-green-900 font-semibold text-xl">
-          {randomlyGeneratedWord.length}
-        </p>
+        </div>
       </div>
-    </div>
+      <div className="sm:hidden fixed bottom-0 right-0 w-full px-2 pb-14 bg-gray-100">
+        <Keyboard
+          onKeyRelease={(button) => virtualKeyboardKeyReleaseHandler(button)}
+        />
+      </div>
+    </>
   )
 }
 

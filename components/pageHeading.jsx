@@ -2,7 +2,7 @@ import React from "react"
 
 const PageHeading = () => {
   return (
-    <div className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl ">
+    <div className="text-3xl md:text-4xl xl:text-5xl ">
       <p
         className="md:my-4 text-center capitalize tracking-wider text-white font-extrabold"
         style={{

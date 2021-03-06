@@ -46,8 +46,8 @@ const Modal = ({ showRules, setShowRules }) => {
           onClick={() => setShowRules(false)}
         >
           <Button
-            mainColor="bg-pink-600"
-            hoverColor="bg-pink-400"
+            mainColor="bg-indigo-600"
+            hoverColor="bg-indigo-400"
             text="Got it, start playing..."
             textSize="text-3xl"
             paddingX="px-3"

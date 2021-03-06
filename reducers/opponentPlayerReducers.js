@@ -38,7 +38,7 @@ export const opponentPlayerInfoReducer = (state = {}, action) => {
       return {
         opponentPlayerCharacter: "",
         opponentPlayerPosition: 0,
-        opponentPlayerName: "",
+        opponentPlayerName: "Opponent",
       }
 
     default:

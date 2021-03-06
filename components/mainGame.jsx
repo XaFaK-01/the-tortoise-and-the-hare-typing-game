@@ -22,32 +22,34 @@ const MainGame = () => {
   return (
     <>
       <RandomWord />
-      <Player
-        playerName={opponentPlayerName}
-        position={opponentPlayerPosition}
-        charImgSrc={`images/${opponentPlayerCharacter}.png`}
-        charImgAlt={opponentPlayerCharacter}
-      />
-      <Player
-        isCurrentPlayer={true}
-        playerName={currentPlayerName}
-        position={currentPlayerPosition}
-        charImgSrc={`images/${currentPlayerCharacter}.png`}
-        charImgAlt={currentPlayerCharacter}
-      />
+      <div className="w-full h-full bg-grass-background bg-cover bg-no-repeat">
+        <Player
+          playerName={opponentPlayerName}
+          position={opponentPlayerPosition}
+          charImgSrc={`images/${opponentPlayerCharacter}.png`}
+          charImgAlt={opponentPlayerCharacter}
+        />
+        <Player
+          isCurrentPlayer={true}
+          playerName={currentPlayerName}
+          position={currentPlayerPosition}
+          charImgSrc={`images/${currentPlayerCharacter}.png`}
+          charImgAlt={currentPlayerCharacter}
+        />
 
-      <img
-        className="sm:hidden fixed w-20 z-0 "
-        style={{ left: "75%", top: "76%" }}
-        src="/images/finish_line.png"
-        alt="finish_line"
-      />
-      <img
-        className="hidden sm:block fixed w-64 z-0 "
-        style={{ left: "82%", top: "53%" }}
-        src="/images/finish_line.png"
-        alt="finish_line"
-      />
+        <img
+          className="sm:hidden fixed w-20 z-0 "
+          style={{ left: "75%", top: "56%" }}
+          src="/images/finish_line.png"
+          alt="finish_line"
+        />
+        <img
+          className="hidden sm:block fixed w-64 z-0 "
+          style={{ left: "82%", top: "53%" }}
+          src="/images/finish_line.png"
+          alt="finish_line"
+        />
+      </div>
     </>
   )
 }
