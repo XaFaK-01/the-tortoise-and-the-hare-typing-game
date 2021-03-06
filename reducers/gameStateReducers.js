@@ -12,6 +12,7 @@ import {
   SET_ROOM_NAME,
   SET_MY_SOCKET_ID,
   SET_OPPONENT_SOCKET_ID,
+  TOGGLE_VIRTUAL_KEYBOARD,
 } from "../constants/constants.js"
 
 export const gameStateReducers = (state = {}, action) => {
@@ -87,8 +88,15 @@ export const gameStateReducers = (state = {}, action) => {
         opponentSocketId: action.payload,
       }
 
+    case TOGGLE_VIRTUAL_KEYBOARD:
+      return {
+        ...state,
+        showKeyboard: action.payload,
+      }
+
     case RESET_GAME_STATE:
       return {
+        showKeyboard: false,
         gameStart: false,
         gameWon: false,
         opponentDifficultyLevel: 3,

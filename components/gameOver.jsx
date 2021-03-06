@@ -46,7 +46,7 @@ const GameOver = ({ race_end_point }) => {
       >
         {opponentPlayerPosition >= race_end_point
           ? `${opponentPlayerName} won, yuck...!`
-          : `${currentPlayerName}  won, yeah!`}
+          : `${currentPlayerName}  won, yeaaaah!`}
       </p>
 
       <p className="text-2xl text-yellow-500 capitalize text-center mt-5">

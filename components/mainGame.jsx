@@ -7,6 +7,7 @@ import Player from "../components/player"
 const MainGame = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
+  const gameState = useSelector((state) => state.gameState)
 
   const {
     currentPlayerPosition,
@@ -18,6 +19,8 @@ const MainGame = () => {
     opponentPlayerPosition,
     opponentPlayerName,
   } = opponentPlayerInfo
+
+  const { showKeyboard } = gameState
 
   return (
     <>
@@ -38,14 +41,15 @@ const MainGame = () => {
         />
 
         <img
-          className="sm:hidden fixed w-20 z-0 "
-          style={{ left: "75%", top: "56%" }}
+          className={`${showKeyboard && "hidden"} fixed w-64 z-0 `}
+          style={{ left: "82%", top: "56%" }}
           src="/images/finish_line.png"
           alt="finish_line"
         />
+
         <img
-          className="hidden sm:block fixed w-64 z-0 "
-          style={{ left: "82%", top: "53%" }}
+          className={`${!showKeyboard && "hidden"} fixed z-0`}
+          style={{ width: "20%", left: "75%", top: "56%" }}
           src="/images/finish_line.png"
           alt="finish_line"
         />

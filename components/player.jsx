@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
+import { useSelector } from "react-redux"
 
 // eslint-disable-next-line react/prop-types
 const Player = ({
@@ -9,10 +10,15 @@ const Player = ({
   playerName,
   isCurrentPlayer,
 }) => {
+  const gameState = useSelector((state) => state.gameState)
+  const { showKeyboard } = gameState
+
   return (
     <>
       <div
-        className="hidden sm:block absolute z-20 transition-all duration-500 ease-in-out"
+        className={`${
+          showKeyboard && "hidden"
+        } absolute z-20 transition-all duration-500 ease-in-out`}
         style={{ left: position + "%", top: "48vh" }}
       >
         <div
@@ -29,7 +35,9 @@ const Player = ({
         />
       </div>
       <div
-        className="sm:hidden absolute z-20 transition-all duration-500 ease-in-out"
+        className={`${
+          !showKeyboard && "hidden"
+        } absolute z-20 transition-all duration-500 ease-in-out`}
         style={{ left: position + "%", top: "26vh" }}
       >
         <div

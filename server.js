@@ -84,10 +84,7 @@ app.prepare().then(async () => {
 
     // ----setting socketids----
     socket.on("set socketids", (data) => {
-      const { room, currentUserSocketId, opponentSocketId } = data(
-        "room: ",
-        room
-      )
+      const { room, currentUserSocketId, opponentSocketId } = data
       // console.log("currentUserSocketId: ", currentUserSocketId)
       // console.log("opponentSocketId: ", opponentSocketId)
 

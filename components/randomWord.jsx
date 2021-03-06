@@ -8,12 +8,15 @@ import {
 
 import { addAPointToOpponentPlayerMultiplayer } from "../actions/opponentPlayerActions"
 
+import Button from "./button"
+
 import {
   incrementTotalWordsTyped,
   incrementFluentWordsTyped,
   addWeakKeyStroke,
   startTypingCountdown,
   incrementCharactersTyped,
+  toggleVirtualKeyboard,
 } from "../actions/gameStateActions"
 
 import {
@@ -31,7 +34,7 @@ const RandomWord = () => {
   const { randomlyGeneratedWord: theRandomWord } = currentPlayerInfo
 
   const gameState = useSelector((state) => state.gameState)
-  const { mySocketId, opponentSocketId, roomName } = gameState
+  const { mySocketId, opponentSocketId, roomName, showKeyboard } = gameState
 
   const [randomlyGeneratedWord, setRandomlyGeneratedWord] = useState(
     () => theRandomWord,
@@ -130,11 +133,25 @@ const RandomWord = () => {
           </p>
         </div>
       </div>
-      <div className="sm:hidden fixed bottom-0 right-0 w-full px-2 pb-14 bg-gray-100">
-        <Keyboard
-          onKeyRelease={(button) => virtualKeyboardKeyReleaseHandler(button)}
+      <div className="2xl:hidden">
+        <Button
+          mainColor="bg-green-600"
+          hoverColor="bg-green-400"
+          text={showKeyboard ? "Hide Keyboard" : "Show Keyboard"}
+          type="submit"
+          textSize="text-lg"
+          paddingX="px-3"
+          paddingY="py-2"
+          function_callback={() => dispatch(toggleVirtualKeyboard())}
         />
       </div>
+      {showKeyboard && (
+        <div className="fixed bottom-0 right-0 w-full px-2 pb-14 bg-gray-100">
+          <Keyboard
+            onKeyRelease={(button) => virtualKeyboardKeyReleaseHandler(button)}
+          />
+        </div>
+      )}
     </>
   )
 }

@@ -14,6 +14,7 @@ import {
   SET_ROOM_NAME,
   SET_MY_SOCKET_ID,
   SET_OPPONENT_SOCKET_ID,
+  TOGGLE_VIRTUAL_KEYBOARD,
 } from "../constants/constants.js"
 
 var opponentPointIncrease
@@ -137,5 +138,15 @@ export const setOpponentSocketId = (socketId) => (dispatch) => {
   dispatch({
     type: SET_OPPONENT_SOCKET_ID,
     payload: socketId,
+  })
+}
+
+export const toggleVirtualKeyboard = () => (dispatch, getState) => {
+  const { gameState } = getState()
+  const { showKeyboard } = gameState
+
+  dispatch({
+    type: TOGGLE_VIRTUAL_KEYBOARD,
+    payload: !showKeyboard,
   })
 }

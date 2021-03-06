@@ -38,6 +38,7 @@ const initialState = {
     opponentPlayerName: "Opponent",
   },
   gameState: {
+    showKeyboard: false,
     gameStart: false,
     gameWon: false,
     opponentDifficultyLevel: 3,
