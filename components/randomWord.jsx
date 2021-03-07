@@ -146,7 +146,7 @@ const RandomWord = () => {
         />
       </div>
       {showKeyboard && (
-        <div className="fixed bottom-0 right-0 w-full px-2 pb-14 bg-gray-100">
+        <div className="fixed z-50 bottom-0 right-0 w-full px-2 pb-14 bg-gray-100">
           <Keyboard
             onKeyRelease={(button) => virtualKeyboardKeyReleaseHandler(button)}
           />

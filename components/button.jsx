@@ -16,9 +16,7 @@ const Button = ({
       onClick={function_callback && function_callback}
       className={`${mainColor} hover:${hoverColor} rounded-2xl ${
         paddingX ? paddingX : "px-5"
-      } ${
-        paddingY ? paddingY : "py-3"
-      } border-4 cursor-pointer my-3 transition-all duration-500 ease-in-out w-full`}
+      } ${paddingY ? paddingY : "py-3"} border-4 cursor-pointer my-3 w-full`}
     >
       <p
         style={{ fontFamily: "Schoolbell" }}

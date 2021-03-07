@@ -3,11 +3,11 @@ import React from "react"
 import { useSelector } from "react-redux"
 import RandomWord from "../components/randomWord"
 import Player from "../components/player"
+import FinishLine from "./finishLine"
 
 const MainGame = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
-  const gameState = useSelector((state) => state.gameState)
 
   const {
     currentPlayerPosition,
@@ -20,12 +20,10 @@ const MainGame = () => {
     opponentPlayerName,
   } = opponentPlayerInfo
 
-  const { showKeyboard } = gameState
-
   return (
     <>
       <RandomWord />
-      <div className="w-full h-full bg-grass-background bg-cover bg-no-repeat">
+      <div className="">
         <Player
           playerName={opponentPlayerName}
           position={opponentPlayerPosition}
@@ -39,20 +37,7 @@ const MainGame = () => {
           charImgSrc={`images/${currentPlayerCharacter}.png`}
           charImgAlt={currentPlayerCharacter}
         />
-
-        <img
-          className={`${showKeyboard && "hidden"} fixed w-64 z-0 `}
-          style={{ left: "82%", top: "56%" }}
-          src="/images/finish_line.png"
-          alt="finish_line"
-        />
-
-        <img
-          className={`${!showKeyboard && "hidden"} fixed z-0`}
-          style={{ width: "20%", left: "75%", top: "56%" }}
-          src="/images/finish_line.png"
-          alt="finish_line"
-        />
+        <FinishLine />
       </div>
     </>
   )

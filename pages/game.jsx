@@ -50,7 +50,7 @@ export default function Home() {
     <div className="w-screen h-screen">
       <PageTitle title="Tortoise and the hare game" />
       <div
-        className="fixed bottom-0 mt-4 w-full h-full py-3 px-4 bg-background-green-meadow bg-repeat-x "
+        className="fixed bottom-0 mt-4 w-full h-full py-3 px-4 bg-gradient-to-b	from-blue-500 via-blue-300 to-blue-200 "
         style={{ backgroundSize: "100% 100%" }}
       >
         <div className="relative ">
