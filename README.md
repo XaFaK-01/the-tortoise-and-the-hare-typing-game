@@ -15,12 +15,12 @@ and some necessary npm packages
 
 ### Mobile and desktop multiplayer mode preview
 
-![Mobile and desktop multiplayer mode preview](./demo/multiplayer_mobile.gif)
+![Mobile and desktop multiplayer mode preview](./demos/multiplayer_mobile.gif)
 
 ### Multiplayer desktop preview
 
-![Desktop multiplayer mode preview](./demo/multiplayer_desktop.gif)
+![Desktop multiplayer mode preview](./demos/multiplayer_desktop.gif)
 
 ### Single player desktop preview
 
-![Single player desktop preview](./demo/single_player.gif)
+![Single player desktop preview](./demos/single_player.gif)
