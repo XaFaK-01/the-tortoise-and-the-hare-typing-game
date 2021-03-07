@@ -94,7 +94,7 @@ const RandomWord = () => {
   const incorrectKeyPressedHandler = () => {
     setCorrectKeyPressed(false)
     setFluentWord(false)
-    dispatch(incrementCharactersTyped())
+    dispatch(INCREMENTCharactersTyped())
     dispatch(addWeakKeyStroke(randomlyGeneratedWord.charAt(0)))
   }
 
