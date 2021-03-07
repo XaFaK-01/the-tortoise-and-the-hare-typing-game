@@ -16,10 +16,11 @@ const Player = ({
   return (
     <>
       <div
-        className="absolute z-20"
+        className="fixed z-20"
         style={{
           left: position + "%",
-          top: `${showKeyboard ? "26vh" : "48vh"}`,
+          // top: `${showKeyboard ? "26vh" : "48vh"}`,
+          bottom: `${showKeyboard ? "33%" : "10%"}`,
         }}
       >
         <div
@@ -30,7 +31,7 @@ const Player = ({
           <p className="">{playerName}</p>
         </div>
         <img
-          className="mt-14 w-16 sm:w-32 "
+          className="mt-14 w-12 sm:w-32 "
           src={charImgSrc}
           alt={charImgAlt}
         />

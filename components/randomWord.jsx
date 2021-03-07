@@ -113,7 +113,7 @@ const RandomWord = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="inline-block p-3 bg-green-500 bg-opacity-20 rounded-lg">
+        <div className="inline-block p-3 bg-green-400 bg-opacity-20 rounded-lg">
           {correctKeyPressed ? (
             <p className="inline-block text-center text-green-800 font-semibold text-3xl">
               {randomlyGeneratedWord}
@@ -123,7 +123,7 @@ const RandomWord = () => {
               <p className="inline-block text-center text-red-600 font-semibold text-3xl">
                 {randomlyGeneratedWord.charAt(0)}
               </p>
-              <p className="inline-block text-center font-semibold text-3xl">
+              <p className="inline-block text-center text-green-900 font-semibold text-3xl">
                 {randomlyGeneratedWord.substr(1)}
               </p>
             </div>
@@ -133,7 +133,8 @@ const RandomWord = () => {
           </p>
         </div>
       </div>
-      <div className="2xl:hidden">
+
+      <div className="2xl:hidden w-max mx-auto">
         <Button
           mainColor="bg-green-600"
           hoverColor="bg-green-400"

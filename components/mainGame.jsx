@@ -5,6 +5,8 @@ import RandomWord from "../components/randomWord"
 import Player from "../components/player"
 import FinishLine from "./finishLine"
 
+import { useSpring, animated } from "react-spring"
+
 const MainGame = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const opponentPlayerInfo = useSelector((state) => state.opponentPlayerInfo)
@@ -20,9 +22,20 @@ const MainGame = () => {
     opponentPlayerName,
   } = opponentPlayerInfo
 
+  const gameState = useSelector((state) => state.gameState)
+  const { showKeyboard } = gameState
+
+  const marginProps = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { delay: 500, duration: 500 },
+  })
+
   return (
     <>
-      <RandomWord />
+      <animated.div style={marginProps}>
+        <RandomWord />
+      </animated.div>
       <div className="">
         <Player
           playerName={opponentPlayerName}
@@ -38,6 +51,12 @@ const MainGame = () => {
           charImgAlt={currentPlayerCharacter}
         />
         <FinishLine />
+        <img
+          className="fixed right-0 z-10 w-full"
+          style={{ bottom: `${showKeyboard ? "30%" : "0%"}` }}
+          src="images/grass-background.png"
+          alt="grass-background"
+        />
       </div>
     </>
   )

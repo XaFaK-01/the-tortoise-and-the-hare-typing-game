@@ -6,6 +6,9 @@ import ChooseCharacter from "../components/chooseCharacter"
 import ChooseGameType from "../components/chooseGameType"
 import UserName from "../components/userName"
 import PageHeading from "../components/pageHeading"
+
+import { useSpring, animated } from "react-spring"
+
 const Home = () => {
   const currentPlayerInfo = useSelector((state) => state.currentPlayerInfo)
   const { currentPlayerCharacter, currentPlayerName } = currentPlayerInfo

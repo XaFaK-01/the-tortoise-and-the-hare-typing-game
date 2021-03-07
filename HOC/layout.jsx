@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import PageTitle from "../components/pageTitle"
 
+import { useSpring, animated } from "react-spring"
+
 // eslint-disable-next-line react/prop-types
 const Layout = ({ children }) => {
   const [currentPageTitle, setCurrentPageTitle] = useState("")
@@ -12,6 +14,12 @@ const Layout = ({ children }) => {
   const { currentPlayerCharacter, currentPlayerName } = currentPlayerInfo
   const { opponentPlayerName, opponentPlayerCharacter } = opponentPlayerInfo
   const { gameType, roomName } = gameState
+
+  const props = useSpring({
+    opacity: 1,
+    marginTop: 0,
+    from: { opacity: 0, marginTop: -500 },
+  })
 
   useEffect(() => {
     if (!gameType) setCurrentPageTitle("Welcome! Please choose game type")
