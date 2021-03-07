@@ -114,7 +114,7 @@ app.prepare().then(async () => {
       // console.log(`socketids: `, socketids)
 
       socket.broadcast.emit("increment opponent player points successful", {
-        points: 8,
+        points: 5,
         socketId,
       })
     })

@@ -63,7 +63,7 @@ const RandomWord = () => {
 
   useEffect(() => {
     if (randomlyGeneratedWord.length === 0) {
-      dispatch(addAPointToCurrentPlayer(8))
+      dispatch(addAPointToCurrentPlayer(5))
       dispatch(generateNewWordOnSuccess())
       dispatch(incrementTotalWordsTyped())
 
