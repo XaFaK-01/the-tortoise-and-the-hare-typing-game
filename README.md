@@ -10,6 +10,8 @@ Technologies Used:
 - Redux
 - Socketio
 
+### Live Site: https://tortoise-and-hare-typing-game.herokuapp.com/
+
 and some necessary npm packages
 ## Demos
 
