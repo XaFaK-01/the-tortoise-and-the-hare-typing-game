@@ -9,10 +9,10 @@ Technologies Used:
 - TailwindCSS
 - Redux
 - Socketio
+- and some necessary npm packages
 
 ### Live Site: https://tortoise-and-hare-typing-game.herokuapp.com/
 
-and some necessary npm packages
 ## Demos
 
 ### Mobile and desktop multiplayer mode preview
